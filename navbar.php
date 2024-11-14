@@ -4,6 +4,7 @@ session_start();
 <nav>
     <ul>
         <li><a href="index.php">Home</a></li>
+        <li><a href="tasks.php">Tasks</a></li>
         <li><a href="account.php">Profile</a></li>
         <li><a href="notifications.php">Notifications</a></li>
         <li><a href="friends.php">Friends</a></li>
