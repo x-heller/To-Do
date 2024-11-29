@@ -60,30 +60,36 @@ $pending_requests = $notifications->find([
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notifications</title>
+    <link rel="stylesheet" href="Styles/style.css">
 </head>
 <body>
 <?php include 'navbar.php'; ?>
 
-<h1>Friend Requests</h1>
+<?php include 'sidebar.php'; ?>
 
-<?php if ($pending_requests->isDead()): ?>
-    <p>No pending friend requests.</p>
-<?php else: ?>
-    <ul>
-        <?php foreach ($pending_requests as $request):
-            $sender = $users->findOne(['_id' => $request['sender_id']]);
-            ?>
-            <li>
-                Friend request from <?php echo htmlspecialchars($sender['username']); ?>
-                <form method="POST" action="notifications.php" style="display:inline;">
-                    <input type="hidden" name="notification_id" value="<?php echo $request['_id']; ?>">
-                    <button type="submit" name="action" value="accept">Accept</button>
-                    <button type="submit" name="action" value="decline">Decline</button>
-                </form>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-<?php endif; ?>
+<div class="content">
+    <h1>Friend Requests</h1>
+
+    <?php if ($pending_requests->isDead()): ?>
+        <p>No pending friend requests.</p>
+    <?php else: ?>
+        <ul>
+            <?php foreach ($pending_requests as $request):
+                $sender = $users->findOne(['_id' => $request['sender_id']]);
+                ?>
+                <li>
+                    Friend request from <?php echo htmlspecialchars($sender['username']); ?>
+                    <form method="POST" action="notifications.php" style="display:inline;">
+                        <input type="hidden" name="notification_id" value="<?php echo $request['_id']; ?>">
+                        <button type="submit" name="action" value="accept">Accept</button>
+                        <button type="submit" name="action" value="decline">Decline</button>
+                    </form>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+</div>
 </body>
 </html>

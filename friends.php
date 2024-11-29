@@ -81,48 +81,62 @@ if (isset($_GET['search'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Friends</title>
+    <link rel="stylesheet" href="Styles/style.css">
+    <link rel="stylesheet" href="Styles/friends.css">
 </head>
 <body>
 <?php include 'navbar.php'; ?>
 
-<h1>Your Friends</h1>
-<ul>
-    <?php foreach ($current_friends as $friend_id):
-        $friend = $users->findOne(['_id' => new MongoDB\BSON\ObjectId($friend_id)]);
-        ?>
-        <li>
-            <?php echo htmlspecialchars($friend['username']); ?>
-            <!-- Remove Friend Button -->
-            <form method="POST" action="friends.php" style="display:inline;">
-                <input type="hidden" name="remove_friend_id" value="<?php echo $friend['_id']; ?>">
-                <button type="submit">Remove Friend</button>
+<?php include 'sidebar.php'; ?>
+
+<div class="content">
+    <div class="friends">
+        <!-- Search and Add Friends Section -->
+        <div class="search-section">
+            <h2>Find and Add Friends</h2>
+            <form method="GET" action="friends.php">
+                <input type="text" name="search" placeholder="Search users">
+                <button type="submit">Search</button>
             </form>
-        </li>
-    <?php endforeach; ?>
-</ul>
 
-<h2>Find and Add Friends</h2>
-<form method="GET" action="friends.php">
-    <input type="text" name="search" placeholder="Search users">
-    <button type="submit">Search</button>
-</form>
+            <h3>Search Results</h3>
+            <div class="search-results">
+                <?php if ($search_results): ?>
+                    <ul>
+                        <?php foreach ($search_results as $result): ?>
+                            <li>
+                                <?php echo htmlspecialchars($result['username']); ?>
+                                <form method="POST" action="friends.php" style="display:inline;">
+                                    <input type="hidden" name="friend_id" value="<?php echo $result['_id']; ?>">
+                                    <button type="submit">Send Friend Request</button>
+                                </form>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php else: ?>
+                    <p class="no-results">No users found.</p>
+                <?php endif; ?>
+            </div>
+        </div>
 
-<h3>Search Results</h3>
-<?php if ($search_results): ?>
-    <ul>
-        <?php foreach ($search_results as $result): ?>
-            <li>
-                <?php echo htmlspecialchars($result['username']); ?>
-                <form method="POST" action="friends.php" style="display:inline;">
-                    <input type="hidden" name="friend_id" value="<?php echo $result['_id']; ?>">
-                    <button type="submit">Send Friend Request</button>
-                </form>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-<?php else: ?>
-    <p>No users found.</p>
-<?php endif; ?>
+        <!-- Existing Friends Section -->
+        <div class="friends-section">
+            <h2>Your Friends</h2>
+            <ul>
+                <?php foreach ($current_friends as $friend_id):
+                    $friend = $users->findOne(['_id' => new MongoDB\BSON\ObjectId($friend_id)]); ?>
+                    <li>
+                        <?php echo htmlspecialchars($friend['username']); ?>
+                        <form method="POST" action="friends.php" style="display:inline;">
+                            <input type="hidden" name="remove_friend_id" value="<?php echo $friend['_id']; ?>">
+                            <button type="submit">Remove Friend</button>
+                        </form>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
 </body>
 </html>

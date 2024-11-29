@@ -1,0 +1,97 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.friends {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+    gap: 20px; /* Space between columns */
+    padding: 20px;
+}
+
+.friends h1 {
+    grid-column: span 2; /* Title spans across both columns */
+    text-align: center;
+}
+
+.search-section, .friends-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-section h2, .friends-section h2 {
+    margin-top: 0;
+}
+
+.search-section form {
+    display: flex;
+    gap: 10px;
+}
+
+.search-section input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-section button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-section button:hover {
+    background-color: #0056b3;
+}
+
+.search-results ul, .friends-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-results ul li, .friends-section ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.search-results ul li:last-child, .friends-section ul li:last-child {
+    border-bottom: none;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #c82333;
+}
+
+.no-results {
+    text-align: center;
+    color: #777;
+}
+
+/* Responsiveness for smaller screens */
+@media (max-width: 768px) {
+    .friends {
+        grid-template-columns: 1fr; /* Single column on smaller screens */
+    }
+}

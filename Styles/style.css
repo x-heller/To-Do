@@ -1,0 +1,157 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: grid;
+    height: 100vh;
+    grid-template-areas:
+                "navbar navbar"
+                "sidebar content";
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 250px 1fr;
+}
+
+/* Navbar Styles */
+.navbar {
+    grid-area: navbar;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+}
+
+.navbar .nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .current-page {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.navbar .nav-right ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.navbar .nav-right li {
+    margin-left: 15px;
+}
+
+.navbar .nav-right a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar .nav-right a.active {
+    text-decoration: underline;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    grid-area: sidebar;
+    background-color: #f4f4f4;
+    /*border-right: 1px solid #ddd;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /*padding: 15px;*/
+
+    padding: 15px 0 15px 15px;
+}
+
+.sidebar img{
+    vertical-align: middle;
+
+}
+
+.sidebar-toggle {
+    display: none;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 5px 10px;
+    border-radius: 15px 0 0 15px;
+}
+
+.sidebar ul li a.active {
+    background-color: #007BFF;
+    color: white;
+}
+
+.sidebar ul li a:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.sidebar ul li a.active img,
+.sidebar ul li a:hover img {
+    filter: invert(100%) brightness(100%); /* Invert the image to white */
+}
+
+.sidebar .logout {
+    margin-top: auto;
+}
+
+/* Content Styles */
+.content {
+    grid-area: content;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    body {
+        grid-template-areas:
+                    "navbar"
+                    "content";
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .sidebar-toggle {
+        display: block;
+    }
+
+    .sidebar.visible {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        background-color: #f4f4f4;
+        z-index: 1000;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .content {
+        margin-left: 0;
+    }
+}
