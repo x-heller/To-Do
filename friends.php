@@ -124,18 +124,44 @@ if (isset($_GET['search'])) {
         <!-- Existing Friends Section -->
         <div class="friends-section">
             <h2>Your Friends</h2>
+            <!--<ul>
+                <?php /*foreach ($current_friends as $friend_id):
+                    $friend = $users->findOne(['_id' => new MongoDB\BSON\ObjectId($friend_id)]); */?>
+                    <li>
+                        <?php /*echo htmlspecialchars($friend['username']); */?>
+                        <form method="POST" action="friends.php" style="display:inline;">
+                            <input type="hidden" name="remove_friend_id" value="<?php /*echo $friend['_id']; */?>">
+                            <button type="submit">Remove Friend</button>
+                        </form>
+                    </li>
+                <?php /*endforeach; */?>
+            </ul>-->
             <ul>
                 <?php foreach ($current_friends as $friend_id):
-                    $friend = $users->findOne(['_id' => new MongoDB\BSON\ObjectId($friend_id)]); ?>
-                    <li>
-                        <?php echo htmlspecialchars($friend['username']); ?>
+                    $friend = $users->findOne(['_id' => new MongoDB\BSON\ObjectId($friend_id)]);
+                    $profilePictureSrc = isset($friend['profile_picture']) ? htmlspecialchars($friend['profile_picture']) : 'default_profile_picture.png';
+                    $firstName = isset($friend['first_name']) ? htmlspecialchars($friend['first_name']) : '';
+                    $lastName = isset($friend['last_name']) ? htmlspecialchars($friend['last_name']) : '';
+                    $fullName = trim("$firstName $lastName");
+                    $username = htmlspecialchars($friend['username']);
+                    ?>
+                    <li class="friend-item">
+                        <?php echo $username; ?>
                         <form method="POST" action="friends.php" style="display:inline;">
                             <input type="hidden" name="remove_friend_id" value="<?php echo $friend['_id']; ?>">
                             <button type="submit">Remove Friend</button>
                         </form>
+
+                        <!-- Hover Information -->
+                        <div class="friend-hover">
+                            <img src="<?php echo $profilePictureSrc; ?>" alt="<?php echo $fullName; ?>'s profile picture">
+                            <p><strong><?php echo $fullName; ?></strong></p>
+                            <p>@<?php echo $username; ?></p>
+                        </div>
                     </li>
                 <?php endforeach; ?>
             </ul>
+
         </div>
     </div>
 </body>

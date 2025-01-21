@@ -2,13 +2,12 @@
 session_start();
 require 'connect.php';
 
-// Redirect to welcome.php if user is not logged in
+// Redirect if user not logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: welcome.php");
     exit;
 }
 
-// Retrieve user information from MongoDB
 $user_id = $_SESSION['user_id'];
 $users = getMongoDBConnection('users');
 $user = $users->findOne(['_id' => new MongoDB\BSON\ObjectId($user_id)]);
@@ -18,52 +17,91 @@ if (!$user) {
     exit;
 }
 
+$message = ''; // Initialize message
+
 // Handle password change
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['old_password']) && isset($_POST['new_password']) && isset($_POST['confirm_password'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['old_password'], $_POST['new_password'], $_POST['confirm_password'])) {
     $old_password = $_POST['old_password'];
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
-    if (password_verify($old_password, $user['password'])) {
-        if ($new_password === $confirm_password) {
-            if (strlen($new_password) >= 6) {
-                $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-
-                $updateResult = $users->updateOne(
-                    ['_id' => new MongoDB\BSON\ObjectId($user_id)],
-                    ['$set' => ['password' => $hashed_password]]
-                );
-
-                $message = $updateResult->getModifiedCount() > 0 ? "Password updated successfully!" : "Failed to update password. Please try again.";
-            } else {
-                $message = "New password must be at least 6 characters long.";
-            }
-        } else {
-            $message = "New password and confirmation do not match.";
-        }
-    } else {
+    if (!password_verify($old_password, $user['password'])) {
         $message = "Old password is incorrect.";
+    } elseif ($new_password !== $confirm_password) {
+        $message = "New password and confirmation do not match.";
+    } elseif (strlen($new_password) < 6) {
+        $message = "New password must be at least 6 characters long.";
+    } else {
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+        $updateResult = $users->updateOne(
+            ['_id' => new MongoDB\BSON\ObjectId($user_id)],
+            ['$set' => ['password' => $hashed_password]]
+        );
+        $message = $updateResult->getModifiedCount() > 0 ? "Password updated successfully!" : "Failed to update password.";
     }
 }
 
 // Handle verification toggle
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['verification'])) {
-    $verification_status = isset($_POST['verification']) ? true : false;
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['verification_toggle'])) {
+    $verification_status = isset($_POST['verification']) && $_POST['verification'] === 'on'; // Checkbox értéke
     $users->updateOne(
         ['_id' => new MongoDB\BSON\ObjectId($user_id)],
         ['$set' => ['verification' => $verification_status]]
     );
-
     $message = $verification_status ? "Account verified." : "Account unverified.";
+    header("Refresh:0");
 }
 
-// Calculate user level and progress
-$xp = $user['xp'] ?? 0;
-$level = intdiv($xp, 100); // Full levels
-$xp_progress = $xp % 100;  // Remaining XP for the next level
-?>
 
+// Handle profile picture upload
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) {
+    $imageFile = $_FILES['profile_picture'];
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    $maxFileSize = 2 * 1024 * 1024; // 2MB max size
+
+    if ($imageFile['error'] !== UPLOAD_ERR_OK) {
+        $message = "Error uploading file.";
+    } elseif (!in_array($imageFile['type'], $allowedTypes)) {
+        $message = "Only JPEG, PNG, or GIF files are allowed.";
+    } elseif ($imageFile['size'] > $maxFileSize) {
+        $message = "File size exceeds 2MB.";
+    } else {
+        $uploadDir = 'uploads/profile_pictures/';
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        $ext = pathinfo($imageFile['name'], PATHINFO_EXTENSION);
+        $uniqueName = $user_id . '_' . time() . '.' . $ext; // Unique file name
+        $imagePath = $uploadDir . $uniqueName;
+
+        // Delete the old profile picture if it exists
+        if (isset($user['profile_picture']) && strpos($user['profile_picture'], $uploadDir) === 0 && file_exists($user['profile_picture'])) {
+            unlink($user['profile_picture']);
+        }
+
+        // Save the new profile picture
+        if (move_uploaded_file($imageFile['tmp_name'], $imagePath)) {
+            $users->updateOne(
+                ['_id' => new MongoDB\BSON\ObjectId($user_id)],
+                ['$set' => ['profile_picture' => $imagePath]]
+            );
+            $message = "Profile picture updated successfully!";
+            header("Refresh:0");
+        } else {
+            $message = "Failed to save the uploaded file.";
+        }
+    }
+}
+
+// Set profile picture path
+$profilePictureSrc = isset($user['profile_picture']) ? htmlspecialchars($user['profile_picture']) : 'path/to/default/profile-picture.jpg';
+
+// User XP and level
+$xp = $user['xp'] ?? 0;
+$level = intdiv($xp, 100);
+$xp_progress = $xp % 100;
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,16 +117,28 @@ $xp_progress = $xp % 100;  // Remaining XP for the next level
 <?php include 'sidebar.php'; ?>
 
 <div class="account-grid">
-    <!-- Account Details Section -->
+    <!-- Account Details -->
     <div class="account-details">
         <h1>Your Account</h1>
-        <p><strong>Username:</strong> <?php echo htmlspecialchars($user['username']); ?></p>
+
+        <div class="profile-picture">
+            <img src="<?php echo $profilePictureSrc; ?>" alt="Profile Picture">
+            <div class="overlay">Change Picture</div>  <!-- A szöveg megjelenik hover esetén -->
+        </div>
+
+        <h2><strong><?php echo htmlspecialchars($user['username']); ?></strong></h2><br>
         <p><strong>First Name:</strong> <?php echo htmlspecialchars($user['first_name']); ?></p>
         <p><strong>Last Name:</strong> <?php echo htmlspecialchars($user['last_name']); ?></p>
         <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="profile_picture" accept="image/*" style="display: none;">
+            <button type="submit" style="display: none;">Save</button>
+        </form>
     </div>
 
-    <!-- Level Section -->
+
+    <!-- Level Progress -->
     <div class="level">
         <h2>Your Level</h2>
         <p><strong>Level:</strong> <?php echo $level; ?></p>
@@ -98,10 +148,10 @@ $xp_progress = $xp % 100;  // Remaining XP for the next level
         </div>
     </div>
 
-    <!-- Change Password Section -->
+    <!-- Change Password -->
     <div class="change-password">
         <h2>Change Password</h2>
-        <form method="POST" action="account.php">
+        <form method="POST">
             <label for="old_password">Old Password:</label>
             <input type="password" id="old_password" name="old_password" required><br>
 
@@ -115,24 +165,38 @@ $xp_progress = $xp % 100;  // Remaining XP for the next level
         </form>
     </div>
 
-    <!-- Verification Section -->
+    <!-- Verification -->
     <div class="verification">
         <h2>Verification</h2>
-        <form method="POST" action="account.php">
-            <label for="verification">
-                <input type="checkbox" id="verification" name="verification" <?php echo $user['verification'] ? 'checked' : ''; ?>>
+        <form method="POST">
+            <input type="hidden" name="verification_toggle" value="1">
+            <label>
+                <input type="checkbox" name="verification" <?php echo $user['verification'] ? 'checked' : ''; ?>>
                 Verify my account
             </label><br>
             <button type="submit">Save</button>
         </form>
-        <!-- Display Message -->
-        <?php if (isset($message)): ?>
-            <p class="message"><?php echo htmlspecialchars($message); ?></p>
-        <?php endif; ?>
     </div>
+
+
+    <!-- Display Messages -->
+    <?php if (!empty($message)): ?>
+        <div class="message"><?php echo htmlspecialchars($message); ?></div>
+    <?php endif; ?>
 </div>
 
+<script>
+    const profilePicture = document.querySelector('.profile-picture');
+    const fileInput = document.querySelector('input[type="file"]');
+    const saveButton = document.querySelector('button[type="submit"]');
 
+    profilePicture.addEventListener('click', () => {
+        fileInput.click();
+    });
 
+    fileInput.addEventListener('change', () => {
+        saveButton.click();
+    });
+</script>
 </body>
 </html>

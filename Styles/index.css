@@ -1,0 +1,61 @@
+.index-grid {
+    display: grid;
+    grid-template-areas:
+        "welcome-card welcome-card day-info"
+        "stats tasks tasks"
+        "notifications notifications notifications";
+    gap: 20px;
+    padding: 20px;
+}
+
+.welcome-card {
+    grid-area: welcome-card;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.day-info {
+    grid-area: day-info;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tasks {
+    grid-area: tasks;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stats {
+    grid-area: stats;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.notifications {
+    grid-area: notifications;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .account-grid {
+        grid-template-areas:
+            "account-details"
+            "level"
+            "change-password"
+            "verification";
+        grid-template-columns: 1fr;
+    }
+}

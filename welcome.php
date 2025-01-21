@@ -48,7 +48,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'password' => $hashed_password,
                     'xp' => 0,
                     'friends' => [],
-                    'groups' => []
+                    'groups' => [],
+                    'verification' => false,
+                    'profile_picture' => 'Images/default_avatar.jpg'
                 ]);
 
 //                $registration_successful = true; // Registration succeeded

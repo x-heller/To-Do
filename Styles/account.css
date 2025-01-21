@@ -21,6 +21,13 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
 }
 
 .level {
@@ -68,6 +75,46 @@ body {
     font-weight: bold;
     margin-top: 10px;
 }
+
+.profile-picture {
+    position: relative;  /* A szöveget pozicionálni kell a kép fölé */
+    display: inline-block;  /* A kép és szöveg egy sorban lesznek */
+}
+
+.profile-picture img {
+    width: 150px;  /* A kép kívánt mérete */
+    height: 150px;  /* Ugyanaz, mint a szélesség, hogy négyzet alakú legyen */
+    border-radius: 50%;  /* A kép kerekítéséhez */
+    object-fit: cover;  /* A kép kitöltése, de a képarány megőrzése */
+    border: 2px solid #ddd;  /* A kép szegélye */
+    transition: all 0.3s ease;  /* Simább animáció a hover hatásra */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);  /* Átlátszó fekete háttér */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    opacity: 0;  /* Alapértelmezetten rejtett */
+    transition: opacity 0.3s ease;  /* A szöveg fokozatos megjelenése */
+}
+
+.profile-picture:hover .overlay {
+    opacity: 1;  /* A szöveg megjelenése hover hatásra */
+    cursor: pointer;
+}
+
+
 
 /* Responsive design */
 @media (max-width: 768px) {

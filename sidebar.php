@@ -23,7 +23,7 @@ $current_page = basename($_SERVER['PHP_SELF'], ".php");
             </a>
         </li>
         <li>
-            <a href="groups.php" <?php echo $current_page === 'friends' ? 'class="active"' : ''; ?>>
+            <a href="groups.php" <?php echo $current_page === 'groups' ? 'class="active"' : ''; ?>>
                 Groups
             </a>
         </li>

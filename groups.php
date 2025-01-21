@@ -105,9 +105,20 @@ $groups = $groupsCollection->find([
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Groups</title>
+    <title>Groups</title>
     <link rel="stylesheet" href="Styles/style.css">
     <script>
+        // Toggle visibility of the create/join form
+        function toggleForm() {
+            const formContainer = document.getElementById('group-form-container');
+            if (formContainer.style.display === 'none' || formContainer.style.display === '') {
+                formContainer.style.display = 'block';
+            } else {
+                formContainer.style.display = 'none';
+            }
+        }
+
+        // Confirmation for joining group
         function confirmJoinGroup(form) {
             if (confirm("Are you sure you want to join this group?")) {
                 form.submit();
@@ -121,31 +132,34 @@ $groups = $groupsCollection->find([
 
 <!-- Content -->
 <div class="content">
-    <h1>Your Groups</h1>
+    <h1>Groups</h1>
 
-    <!-- Group Creation Form -->
-    <h2>Create a Group</h2>
-    <form method="POST" action="groups.php">
-        <label for="create_group_name">Group Name:</label>
-        <input type="text" id="create_group_name" name="create_group_name" required><br>
+    <!-- Button to toggle the create/join form -->
+    <button onclick="toggleForm()">Create or Join</button>
 
-        <label for="create_group_description">Description:</label>
-        <textarea id="create_group_description" name="create_group_description" required></textarea><br>
+    <!-- Create or Join Group Form -->
+    <div id="group-form-container" style="display:none; margin-top: 20px;">
+        <h2>Create a Group</h2>
+        <form method="POST" action="groups.php">
+            <label for="create_group_name">Group Name:</label>
+            <input type="text" id="create_group_name" name="create_group_name" required><br>
 
-        <button type="submit">Create a Group</button>
-    </form>
+            <label for="create_group_description">Description:</label>
+            <textarea id="create_group_description" name="create_group_description" required></textarea><br>
 
-    <hr>
+            <button type="submit">Create a Group</button>
+        </form>
 
-    <!-- Join an Existing Group Form -->
-    <h2>Join an Existing Group</h2>
-    <form method="POST" action="groups.php" onsubmit="event.preventDefault(); confirmJoinGroup(this);">
-        <label for="join_group_code">Enter Invitation Code to Join:</label>
-        <input type="text" id="join_group_code" name="join_group_code" required><br>
-        <button type="submit">Join Group</button>
-    </form>
+        <hr>
 
-    <hr>
+        <!-- Join an Existing Group Form -->
+        <h2>Join an Existing Group</h2>
+        <form method="POST" action="groups.php" onsubmit="event.preventDefault(); confirmJoinGroup(this);">
+            <label for="join_group_code">Enter Invitation Code to Join:</label>
+            <input type="text" id="join_group_code" name="join_group_code" required><br>
+            <button type="submit">Join Group</button>
+        </form>
+    </div>
 
     <!-- List of Groups User is a Member Of -->
     <h2>Your Groups</h2>
@@ -154,12 +168,11 @@ $groups = $groupsCollection->find([
             <li>
                 <a href="group_info.php?id=<?php echo $group['_id']; ?>"><?php echo htmlspecialchars($group['name']); ?></a>
                 - <?php echo htmlspecialchars($group['description']); ?>
-                <!-- Invitation Code is now hidden and will be displayed on group_info.php -->
             </li>
         <?php endforeach; ?>
     </ul>
-
 </div>
 </body>
 </html>
+
 
