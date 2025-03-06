@@ -1,63 +1,37 @@
-/* General styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-
-}
-
-.account-grid {
-    display: grid;
-    grid-template-areas:
-        "account-details level"
-        "change-password verification";
+.columns {
+    display: flex;
     gap: 20px;
-    padding: 20px;
+}
+.column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .account-details {
-    grid-area: account-details;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
 
+    color: #425c5a;
+    margin: 40px 0;
+    padding: 20px;
 }
 
 .level {
-    grid-area: level;
     background: #fff;
+    color: #425c5a;
+    margin-top: 20px;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.change-password {
-    grid-area: change-password;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.verification {
-    grid-area: verification;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
 }
 
 .progress-bar {
     width: 100%;
     height: 20px;
-    background: #eee;
+    background: #e2eceb;
     border-radius: 10px;
     overflow: hidden;
     margin: 10px 0;
@@ -65,8 +39,59 @@ body {
 
 .progress {
     height: 100%;
-    background: #007bff;
+    background: #3c5654;
     width: 0; /* Default width, updated dynamically with PHP */
+}
+
+.change-password {
+    background: #fff;
+    color: #425c5a;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    /*align-items: center;*/
+    justify-content: center;
+    text-align: center;
+}
+
+input[type="password"]{
+    width: 50%;
+    padding: 10px;
+    margin: 5px 0 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    font-size: 14px;
+    outline: none;
+    color: #425c5a;
+    background-color: #f1f1f1;
+}
+
+.verification {
+    background: #fff;
+    color: #425c5a;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    /*align-items: center;*/
+    justify-content: center;
+    text-align: center;
+}
+
+.verification button,
+.change-password button {
+    background: #425c5a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
 .message {
@@ -112,18 +137,4 @@ body {
 .profile-picture:hover .overlay {
     opacity: 1;  /* A szöveg megjelenése hover hatásra */
     cursor: pointer;
-}
-
-
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .account-grid {
-        grid-template-areas:
-            "account-details"
-            "level"
-            "change-password"
-            "verification";
-        grid-template-columns: 1fr;
-    }
 }

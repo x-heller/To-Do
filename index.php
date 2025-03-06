@@ -50,11 +50,10 @@ foreach ($tasks as $task) {
     <link rel="stylesheet" href="Styles/index.css">
 </head>
 <body>
-<?php include 'navbar.php'; ?>
-
+<?php include 'Includes/header.php'; ?>
 <?php include 'sidebar.php'; ?>
 
-<div class="index-grid">
+<div class="main-content">
     <div class="welcome-card">
         <h1>Welcome, <?php echo htmlspecialchars($user['username']); ?>!</h1>
     </div>

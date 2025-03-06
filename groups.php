@@ -127,11 +127,10 @@ $groups = $groupsCollection->find([
     </script>
 </head>
 <body>
-<?php include 'navbar.php'; ?>
+<?php include 'Includes/header.php'; ?>
 <?php include 'sidebar.php'; ?>
 
-<!-- Content -->
-<div class="content">
+<div class="main-content">
     <h1>Groups</h1>
 
     <!-- Button to toggle the create/join form -->

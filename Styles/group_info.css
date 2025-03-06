@@ -1,0 +1,57 @@
+.group_info-grid {
+    display: grid;
+    grid-template-areas:
+        "header header header"
+        "info members manage"
+        "tasks tasks tasks"
+        "tasks tasks tasks";
+    gap: 20px;
+    padding: 20px;
+}
+
+.info {
+    grid-area: info;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.members {
+    grid-area: members;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.manage {
+    grid-area: manage;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tasks {
+    grid-area: tasks;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design */
+
+@media (max-width: 768px) {
+    .group_info-grid {
+        grid-template-areas:
+            "header"
+            "info"
+            "members"
+            "manage"
+            "tasks";
+        grid-template-columns: 1fr;
+    }
+}
+

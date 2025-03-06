@@ -1,112 +1,207 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-h1, h2 {
-    text-align: center;
-}
-
-/* New Task Button */
-#new-task-button {
-    display: block;
-    margin: 20px auto;
+.title{
+    font-size: 1em;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    color: #425c5a;
+    border-radius: 30px;
     padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007BFF;
+}
+
+.title button{
+    background: #425c5a;
     color: white;
     border: none;
-    border-radius: 5px;
+    padding: 10px 20px;
+    border-radius: 20px;
     cursor: pointer;
 }
 
-#new-task-button:hover {
+#task-list{
+    margin-top: 20px;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#task-list .task-item:first-child {
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+#task-list .task-item:last-child {
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.task-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.task-item:hover{
+    background: #f9f9f9;
+}
+
+.task-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 10px; /* Hozzáad egyenlő távolságot */
+}
+
+.task-name {
+    flex: 1; /* A szöveg kitölti a rendelkezésre álló helyet */
+    white-space: nowrap; /* Ne törje meg a szöveget */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Ha túl hosszú, rakjon pont-pont-pontot */
+}
+
+.task-deadline {
+    font-size: 1em;
+    flex: 1;
+    color: #999999;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Popup alapstílus */
+.popup {
+    display: none; /* Kezdetben el van rejtve */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #e2eceb;
+    padding: 40px;
+    border-radius: 20px;
+    border: 2px solid #425c5a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 1000px;  /* Növeld a szélességet */
+    max-width: 90%;  /* 90%-os max szélesség, hogy kisebb képernyőkön is alkalmazkodjon */
+    height: 600px;  /* Állíts be egy magasságot, ha szükséges */
+    overflow-y: auto; /* Görgethetővé teszi a tartalmat, ha túl nagy */
+}
+
+.popup h2 {
+    margin-bottom: 20px;
+    color: #425c5a;
+}
+
+.popup label {
+    font-size: 16px;
+    color: #425c5a;
+}
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.form-columns {
+    display: flex;
+    gap: 20px;
+}
+.form-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.friends-list {
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: #f1f1f1;
+}
+
+.friend-option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.submit-btn {
+    align-self: center;
+    margin-top: 20px;
+    font-size: 16px;
+    background: #425c5a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.submit-btn:hover {
     background-color: #0056b3;
 }
-
-/* New Task Form */
-.new-task {
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-/* Input and Textarea styles */
-.new-task input, .new-task textarea {
+input[type="text"], input[type="date"], textarea {
     width: 100%;
-    padding: 8px;
-    margin: 10px 0;
+    padding: 10px;
+    margin: 5px 0 15px 0;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 30px;
+    font-size: 14px;
+    outline: none;
+    color: #425c5a;
+    background-color: #f1f1f1;
+}
+textarea {
+    resize: vertical;
+    border-radius: 20px;
+    min-height: 100px;
+    max-height: 150px;
 }
 
-.new-task button {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
+.details-popup {
+    display: none; /* Kezdetben el van rejtve */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 600px;  /* Növeld a szélességet */
+    max-width: 90%;  /* 90%-os max szélesség, hogy kisebb képernyőkön is alkalmazkodjon */
+    height: 600px;  /* Állíts be egy magasságot, ha szükséges */
+    overflow-y: auto; /* Görgethetővé teszi a tartalmat, ha túl nagy */
+}
+
+/* Overlay háttér */
+.overlay {
+    display: none; /* Kezdetben el van rejtve */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+
+/* Popup bezáró gomb */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
     cursor: pointer;
 }
 
-.new-task button:hover {
-    background-color: #218838;
+.pending-task {
+    background-color: yellow !important;
 }
 
-/* Task List */
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.task {
-    padding: 15px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f4f4f4;
-}
-
-.task form {
-    display: inline;
-}
-
-.task input[type="checkbox"] {
-    margin-right: 10px;
-}
-
-.task button {
-    padding: 5px 10px;
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.task button:hover {
-    background-color: #c82333;
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .new-task, .task {
-        width: 90%;
-        margin: 10px auto;
-    }
-
-    #new-task-button {
-        width: 90%;
-        margin: 20px auto;
-    }
-
-    .new-task input, .new-task textarea {
-        padding: 10px;
-    }
-}

@@ -1,0 +1,59 @@
+{
+  "hu": {
+    "welcome-message": "Üdvözöllek! Jelentkezz be vagy regisztrálj.",
+    "login-title": "Bejelentkezés",
+    "login-button": "Bejelentkezés",
+    "register-title": "Regisztráció",
+    "register-button": "Regisztráció",
+    "show-register": "Regisztráció",
+    "show-login": "Bejelentkezés",
+    "have-account": "Már van fiókod?",
+    "no-account": "Még nincs fiókod?",
+    "placeholder": {
+      "username": "Felhasználónév",
+      "password": "Jelszó",
+      "confirm-password": "Jelszó megerősítése",
+      "email": "E-mail",
+      "first-name": "Keresztnév",
+      "last-name": "Vezetéknév"
+    }
+  },
+  "en": {
+    "welcome-message": "Welcome! Please log in or register.",
+    "login-title": "Login",
+    "login-button": "Login",
+    "register-title": "Register",
+    "register-button": "Register",
+    "show-register": "Register",
+    "show-login": "Login",
+    "have-account": "Already have an account?",
+    "no-account": "Don't have an account yet?",
+    "placeholder": {
+      "username": "Username",
+      "password": "Password",
+      "confirm-password": "Confirm password",
+      "email": "E-mail",
+      "first-name": "First name",
+      "last-name": "Last name"
+    }
+  },
+  "de": {
+    "welcome-message": "Willkommen! Bitte einloggen oder registrieren.",
+    "login-title": "Einloggen",
+    "login-button": "Einloggen",
+    "register-title": "Registrieren",
+    "register-button": "Registrieren",
+    "show-register": "Registrieren",
+    "show-login": "Einloggen",
+    "have-account": "Haben Sie bereits ein Konto?",
+    "no-account": "Haben Sie noch kein Konto?",
+    "placeholder": {
+      "username": "Benutzername",
+      "password": "Passwort",
+      "confirm-password": "Passwort bestätigen",
+      "email": "E-Mail",
+      "first-name": "Vorname",
+      "last-name": "Nachname"
+    }
+  }
+}

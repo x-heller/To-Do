@@ -113,70 +113,73 @@ $xp_progress = $xp % 100;
     <link rel="stylesheet" href="Styles/account.css">
 </head>
 <body>
-<?php include 'navbar.php'; ?>
+<?php include 'Includes/header.php'; ?>
 <?php include 'sidebar.php'; ?>
 
-<div class="account-grid">
+<div class="main-content">
     <!-- Account Details -->
-    <div class="account-details">
-        <h1>Your Account</h1>
+    <div class="columns">
+        <div class="column">
+            <div class="account-details">
+                <div class="profile-picture">
+                    <img src="<?php echo $profilePictureSrc; ?>" alt="Profile Picture">
+                    <div class="overlay">Change Picture</div>  <!-- A szöveg megjelenik hover esetén -->
+                </div>
 
-        <div class="profile-picture">
-            <img src="<?php echo $profilePictureSrc; ?>" alt="Profile Picture">
-            <div class="overlay">Change Picture</div>  <!-- A szöveg megjelenik hover esetén -->
+                <h1><strong><?php echo htmlspecialchars($user['username']); ?></strong></h1><br>
+                <p><strong>First Name:</strong> <?php echo htmlspecialchars($user['first_name']); ?></p>
+                <p><strong>Last Name:</strong> <?php echo htmlspecialchars($user['last_name']); ?></p>
+                <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="file" name="profile_picture" accept="image/*" style="display: none;">
+                    <button type="submit" style="display: none;">Save</button>
+                </form>
+            </div>
+
+
+            <!-- Level Progress -->
+            <div class="level">
+                <h2><strong>Level:</strong> <?php echo $level; ?></h2><br>
+                <p><strong>XP Progress:</strong> <?php echo $xp_progress; ?>/100</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: <?php echo $xp_progress; ?>%;"></div>
+                </div>
+            </div>
         </div>
+        <div class="column">
+            <!-- Change Password -->
+            <div class="change-password">
+                <h2>Change Password</h2><br>
+                <form method="POST">
+                    <label for="old_password">Old Password</label><br>
+                    <input type="password" id="old_password" name="old_password" required><br>
 
-        <h2><strong><?php echo htmlspecialchars($user['username']); ?></strong></h2><br>
-        <p><strong>First Name:</strong> <?php echo htmlspecialchars($user['first_name']); ?></p>
-        <p><strong>Last Name:</strong> <?php echo htmlspecialchars($user['last_name']); ?></p>
-        <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+                    <label for="new_password">New Password</label><br>
+                    <input type="password" id="new_password" name="new_password" required><br>
 
-        <form method="POST" enctype="multipart/form-data">
-            <input type="file" name="profile_picture" accept="image/*" style="display: none;">
-            <button type="submit" style="display: none;">Save</button>
-        </form>
-    </div>
+                    <label for="confirm_password">Confirm New Password</label><br>
+                    <input type="password" id="confirm_password" name="confirm_password" required><br>
 
+                    <button type="submit">Change Password</button>
+                </form>
+            </div>
 
-    <!-- Level Progress -->
-    <div class="level">
-        <h2>Your Level</h2>
-        <p><strong>Level:</strong> <?php echo $level; ?></p>
-        <p><strong>XP Progress:</strong> <?php echo $xp_progress; ?>/100</p>
-        <div class="progress-bar">
-            <div class="progress" style="width: <?php echo $xp_progress; ?>%;"></div>
+            <!-- Verification -->
+            <div class="verification">
+                <h2>Verification</h2><br>
+                <form method="POST">
+                    <input type="hidden" name="verification_toggle" value="1">
+                    <label>
+                        <input type="checkbox" name="verification" <?php echo $user['verification'] ? 'checked' : ''; ?>>
+                        Verify my account
+                    </label><br>
+                    <button type="submit">Save</button>
+                </form>
+            </div>
         </div>
     </div>
 
-    <!-- Change Password -->
-    <div class="change-password">
-        <h2>Change Password</h2>
-        <form method="POST">
-            <label for="old_password">Old Password:</label>
-            <input type="password" id="old_password" name="old_password" required><br>
-
-            <label for="new_password">New Password:</label>
-            <input type="password" id="new_password" name="new_password" required><br>
-
-            <label for="confirm_password">Confirm New Password:</label>
-            <input type="password" id="confirm_password" name="confirm_password" required><br>
-
-            <button type="submit">Change Password</button>
-        </form>
-    </div>
-
-    <!-- Verification -->
-    <div class="verification">
-        <h2>Verification</h2>
-        <form method="POST">
-            <input type="hidden" name="verification_toggle" value="1">
-            <label>
-                <input type="checkbox" name="verification" <?php echo $user['verification'] ? 'checked' : ''; ?>>
-                Verify my account
-            </label><br>
-            <button type="submit">Save</button>
-        </form>
-    </div>
 
 
     <!-- Display Messages -->

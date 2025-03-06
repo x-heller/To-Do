@@ -87,20 +87,20 @@ if (isset($_POST['task_id']) && isset($_POST['completed'])) {
             exit;
         }
 
-        // Update the task with completion and image path
+        // Update the task with "pending" status instead of "completed"
         $tasksCollection->updateOne(
             ['_id' => new MongoDB\BSON\ObjectId($task_id)],
-            ['$set' => ['completed' => $completed, 'verification_image' => $imagePath]]
-        );
-
-        // Add XP to the user
-        $usersCollection->updateOne(
-            ['_id' => new MongoDB\BSON\ObjectId($user_id)],
-            ['$inc' => ['xp' => 10]]
+            [
+                '$set' => [
+                    'completed' => false,
+                    'status' => 'pending',
+                    'verification_image' => $imagePath
+                ]
+            ]
         );
 
     } else if (!$task['verified_task']) {
-        // Non-verified tasks can be completed without an image
+        // Non-verified tasks can be completed directly
         $tasksCollection->updateOne(
             ['_id' => new MongoDB\BSON\ObjectId($task_id)],
             ['$set' => ['completed' => $completed]]
@@ -110,6 +110,7 @@ if (isset($_POST['task_id']) && isset($_POST['completed'])) {
     header("Location: tasks.php");
     exit;
 }
+
 
 // Handle deleting a task
 if (isset($_POST['delete_task_id'])) {
@@ -159,68 +160,89 @@ $tasks = $tasksCollection->find([
     </script>
 </head>
 <body>
-<?php include 'navbar.php'; ?>
+<?php /*include 'navbar.php'; */?>
 
+
+<?php include 'Includes/header.php'; ?>
 <?php include 'sidebar.php'; ?>
 
 <!-- Content -->
-<div class="content">
-    <h1>Your Tasks</h1>
+<div class="main-content">
 
-    <!-- New Task Button -->
-    <button id="new-task-button">New Task</button>
+    <div class="title">
 
-    <!-- Task Form (Initially Hidden) -->
-    <form class="new-task" id="new-task-form" method="POST" action="tasks.php" style="display: none;">
-        <label for="task_name">Task Name:</label>
-        <input type="text" id="task_name" name="task_name" required><br>
+        <h1>Your Tasks</h1>
 
-        <label for="task_description">Description:</label>
-        <textarea id="task_description" name="task_description" required></textarea><br>
+        <!-- New Task Button -->
+        <button id="new-task-button">New Task</button>
+    </div>
 
-        <label for="task_deadline">Deadline:</label>
-        <input type="date" id="task_deadline" name="task_deadline" required><br>
 
-        <label>Assign to Friends:</label><br>
-        <?php foreach ($friends as $friend_id): ?>
-            <?php $friend = $usersCollection->findOne(['_id' => $friend_id]); ?>
-            <?php if ($friend): ?>
-                <input type="checkbox" name="assigned_friends[]" value="<?php echo $friend['_id']; ?>">
-                <?php echo htmlspecialchars($friend['username']); ?><br>
-            <?php endif; ?>
-        <?php endforeach; ?>
+    <div class="overlay" id="overlay"></div> <!-- Overlay háttér -->
 
-        <button type="submit">Add Task</button>
-    </form>
+    <div class="popup" id="task-popup">
+        <span class="close-btn" id="close-popup">&times;</span>
+        <h2>New Task</h2>
+        <form id="new-task-form" method="POST" action="tasks.php" class="task-form">
+            <div class="form-columns">
+                <div class="form-column">
+                    <label for="task_name">Task Name:</label>
+                    <input type="text" id="task_name" name="task_name" required>
 
-    <h2>Your Task List</h2>
+                    <label for="task_description">Description:</label>
+                    <textarea id="task_description" name="task_description" required></textarea>
+
+                    <label for="task_deadline">Deadline:</label>
+                    <input type="date" id="task_deadline" name="task_deadline" required>
+                </div>
+
+                <div class="form-column">
+                    <label>Assign to Friends:</label>
+                    <div class="friends-list">
+                        <?php foreach ($friends as $friend_id): ?>
+                            <?php $friend = $usersCollection->findOne(['_id' => $friend_id]); ?>
+                            <?php if ($friend): ?>
+                                <div class="friend-option">
+                                    <input type="checkbox" name="assigned_friends[]" value="<?php echo $friend['_id']; ?>">
+                                    <?php echo htmlspecialchars($friend['username']); ?>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Add Task</button>
+        </form>
+    </div>
+
+
+    <!--<h2>Your Task List</h2>-->
 
     <!-- Display Tasks -->
-    <ul>
+    <ul id="task-list">
         <?php foreach ($tasks as $task): ?>
-            <li class="task">
-                <!-- Task Summary: Includes Completion Checkbox -->
+            <li class="task-item <?php echo isset($task['status']) && $task['status'] === 'pending' ? 'pending-task' : ''; ?>">
+            <!-- Task Summary: Includes Completion Checkbox -->
                 <div class="task-summary">
                     <!-- Completion Checkbox and Verification Image Upload -->
                     <form method="POST" action="tasks.php" enctype="multipart/form-data" style="display:inline;">
                         <?php if ($task['verified_task'] && !$task['completed']): ?>
-                            <input type="file" name="verification_image" id="verification_image_<?php echo $task['_id']; ?>" required
-                                   onchange="enableCheckbox('<?php echo $task['_id']; ?>')">
+                            <input type="file" name="verification_image" id="verification_image_<?php echo $task['_id']; ?>"
+                                   required
+                                   onchange="enableCheckbox('<?php echo $task['_id']; ?>')"
+                                <?php echo (isset($task['status']) && $task['status'] === 'pending') ? 'disabled style="display:none;"' : ''; ?>>
                         <?php endif; ?>
 
-                        <input type="checkbox" name="completed" id="completed_<?php echo $task['_id']; ?>" value="true"
+                        <input type="checkbox" name="completed" id="task_<?php echo $task['_id']; ?>" value="true"
                             <?php echo $task['completed'] ? 'checked' : ''; ?>
-                            <?php echo ($task['verified_task'] && !$task['completed']) ? 'disabled' : ''; ?>
+                            <?php echo ($task['verified_task'] && !$task['completed']) || (isset($task['status']) && $task['status'] === 'pending') ? 'disabled' : ''; ?>
                                onchange="this.form.submit()">
                         <input type="hidden" name="task_id" value="<?php echo $task['_id']; ?>">
                     </form>
 
-
-                    <span class="task-name"><?php echo htmlspecialchars($task['name']); ?></span> -
+                    <span class="task-name"><?php echo htmlspecialchars($task['name']); ?></span>
                     <span class="task-deadline">(Due: <?php echo htmlspecialchars($task['deadline']); ?>)</span>
-
-                    <!-- Button to Expand/Collapse the Task Details -->
-                    <button type="button" class="toggle-details-btn">Show Details</button>
 
                     <!-- Delete Button -->
                     <form method="POST" action="tasks.php" style="display:inline;" onsubmit="event.preventDefault(); confirmDeletion(this);">
@@ -229,8 +251,13 @@ $tasks = $tasksCollection->find([
                     </form>
                 </div>
 
-                <!-- Extended Task Information (Initially Hidden) -->
-                <div class="task-details" style="display:none;">
+
+
+                <div class="details-popup" id="task-details-popup">
+                    <h2><?php echo htmlspecialchars($task['name']); ?></h2>
+
+                    <p><strong>Deadline:</strong> <?php echo htmlspecialchars($task['deadline']); ?></p>
+
                     <p><strong>Description:</strong> <?php echo htmlspecialchars($task['description']); ?></p>
 
                     <?php if (isset($task['verification_image']) && $task['completed']): ?>
@@ -241,7 +268,6 @@ $tasks = $tasksCollection->find([
                     <?php
                     // Convert BSONArray to PHP array, default to empty if not set
                     $assigned_friends = isset($task['assigned_friends']) ? (array)$task['assigned_friends'] : [];
-
 
                     // Include the task creator (user) in the assigned users
                     $assigned_users = [new MongoDB\BSON\ObjectId($task['user_id'])];
@@ -266,8 +292,6 @@ $tasks = $tasksCollection->find([
         <?php endforeach; ?>
     </ul>
 
-
-
     <!-- JavaScript to Toggle New Task Form -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -281,12 +305,35 @@ $tasks = $tasksCollection->find([
             }
         });
 
-        document.getElementById('new-task-button').addEventListener('click', function() {
+        /*document.getElementById('new-task-button').addEventListener('click', function() {
             var form = document.getElementById('new-task-form');
             form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        });*/
+
+        // A "New Task" gomb kattintására jelenjen meg a popup
+        document.getElementById('new-task-button').addEventListener('click', function() {
+            document.getElementById('task-popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
         });
 
-        // Add an event listener for all "Show Details" buttons
+
+        // A bezáró gomb kattintására tűnjön el a popup
+        document.getElementById('close-popup').addEventListener('click', function() {
+            document.getElementById('task-popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        });
+
+        // A háttérre kattintva is elrejthető a popup
+        document.getElementById('overlay').addEventListener('click', function() {
+            document.getElementById('task-popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        });
+
+
+
+
+
+        /*// Add an event listener for all "Show Details" buttons
         document.querySelectorAll('.toggle-details-btn').forEach(button => {
             button.addEventListener('click', function() {
                 var taskDetails = this.closest('li').querySelector('.task-details');
@@ -294,17 +341,18 @@ $tasks = $tasksCollection->find([
                 this.textContent = buttonText;
                 taskDetails.style.display = taskDetails.style.display === 'none' ? 'block' : 'none';
             });
-        });
+        });*/
 
         function enableCheckbox(taskId) {
-            const checkbox = document.getElementById(`completed_${taskId}`);
+            const checkbox = document.getElementById(`task_${taskId}`);
             checkbox.disabled = false;
         }
+
+
+
     </script>
 
 </div>
-
-
 
 </body>
 </html>
