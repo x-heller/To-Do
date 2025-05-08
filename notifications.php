@@ -10,6 +10,9 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $users = getMongoDBConnection('users');
 $notifications = getMongoDBConnection('notifications');
+$tasksCollection = getMongoDBConnection('tasks');
+
+$user = $users->findOne(['_id' => new MongoDB\BSON\ObjectId($user_id)]);
 
 // Handle accepting or declining friend requests
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -36,22 +39,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ['_id' => $notification['_id']],
                 ['$set' => ['status' => 'accepted']]
             );
-            echo "Friend request accepted.";
         } elseif ($action === 'decline') {
             // Update notification status to declined
             $notifications->updateOne(
                 ['_id' => $notification['_id']],
                 ['$set' => ['status' => 'declined']]
             );
-            echo "Friend request declined.";
         }
     }
 }
 
-// Fetch all pending friend requests
+// Fetch all pending friend requests and task verifications
 $pending_requests = $notifications->find([
     'receiver_id' => new MongoDB\BSON\ObjectId($user_id),
-    'type' => 'friend_request',
+    'type' => ['$in' => ['friend_request', 'task_pending']],
     'status' => 'pending'
 ]);
 ?>
@@ -63,29 +64,38 @@ $pending_requests = $notifications->find([
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notifications</title>
     <link rel="stylesheet" href="Styles/style.css">
+    <link rel="stylesheet" href="Styles/notifications.css">
 </head>
 <body>
-<?php include 'navbar.php'; ?>
-
+<?php include 'Includes/header.php'; ?>
 <?php include 'sidebar.php'; ?>
+<?php include 'Includes/language.php'; ?>
 
-<div class="content">
-    <h1>Friend Requests</h1>
+<div class="main-content">
+    <h1><?= htmlspecialchars($texts['notifications']['title']) ?></h1>
 
     <?php if ($pending_requests->isDead()): ?>
-        <p>No pending friend requests.</p>
+        <p class="notification-item"><?= htmlspecialchars($texts['notifications']['no-notifications']) ?></p>
     <?php else: ?>
-        <ul>
+        <ul class="notification-list">
             <?php foreach ($pending_requests as $request):
                 $sender = $users->findOne(['_id' => $request['sender_id']]);
                 ?>
-                <li>
-                    Friend request from <?php echo htmlspecialchars($sender['username']); ?>
-                    <form method="POST" action="notifications.php" style="display:inline;">
-                        <input type="hidden" name="notification_id" value="<?php echo $request['_id']; ?>">
-                        <button type="submit" name="action" value="accept">Accept</button>
-                        <button type="submit" name="action" value="decline">Decline</button>
-                    </form>
+                <li class="notification-item">
+                    <?php if ($request['type'] === 'friend_request'): ?>
+                        <?= htmlspecialchars($texts['notifications']['new-friend-request']) ?> <a><?php echo htmlspecialchars($sender['username']); ?></a>
+                        <form method="POST" action="notifications.php" style="display:inline;">
+                            <input type="hidden" name="notification_id" value="<?php echo $request['_id']; ?>">
+                            <button type="submit" name="action" value="accept"><?= htmlspecialchars($texts['notifications']['friend-request-accept']) ?></button>
+                            <button type="submit" name="action" value="decline"><?= htmlspecialchars($texts['notifications']['friend-request-decline']) ?></button>
+                        </form>
+                    <?php elseif ($request['type'] === 'task_pending'): ?>
+                        <?= htmlspecialchars($texts['notifications']['task-verification']) ?>
+                        <a><?php echo htmlspecialchars($sender['username']); ?></a>
+                        <button class="button-link" onclick="location.href='friend_info.php?id=<?= $sender['_id']; ?>'">
+                            <?= htmlspecialchars($texts['notifications']['go-to-profile']) ?>
+                        </button>
+                    <?php endif; ?>
                 </li>
             <?php endforeach; ?>
         </ul>

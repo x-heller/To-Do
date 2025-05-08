@@ -44,7 +44,6 @@
     background: white;
     border-bottom: 1px solid #e0e0e0;
     transition: 0.3s;
-    cursor: pointer;
 }
 
 .task-item:hover{
@@ -56,14 +55,14 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    gap: 10px; /* Hozzáad egyenlő távolságot */
+    gap: 10px;
 }
 
 .task-name {
-    flex: 1; /* A szöveg kitölti a rendelkezésre álló helyet */
-    white-space: nowrap; /* Ne törje meg a szöveget */
+    flex: 1;
+    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Ha túl hosszú, rakjon pont-pont-pontot */
+    text-overflow: ellipsis;
 }
 
 .task-deadline {
@@ -74,9 +73,8 @@
     overflow: hidden;
 }
 
-/* Popup alapstílus */
 .popup {
-    display: none; /* Kezdetben el van rejtve */
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -87,18 +85,18 @@
     border: 2px solid #425c5a;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    width: 1000px;  /* Növeld a szélességet */
-    max-width: 90%;  /* 90%-os max szélesség, hogy kisebb képernyőkön is alkalmazkodjon */
-    height: 600px;  /* Állíts be egy magasságot, ha szükséges */
-    overflow-y: auto; /* Görgethetővé teszi a tartalmat, ha túl nagy */
+    width: 1000px;
+    max-width: 90%;
+    height: 600px;
+    overflow-y: auto;
 }
 
-.popup h2 {
+.popup .details-popup h2 {
     margin-bottom: 20px;
     color: #425c5a;
 }
 
-.popup label {
+.popup .details-popup label {
     font-size: 16px;
     color: #425c5a;
 }
@@ -156,6 +154,20 @@ input[type="text"], input[type="date"], textarea {
     color: #425c5a;
     background-color: #f1f1f1;
 }
+
+.custom-file-upload {
+    display: inline-block;
+    cursor: pointer;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload img {
+    vertical-align: middle;
+}
+
 textarea {
     resize: vertical;
     border-radius: 20px;
@@ -164,24 +176,31 @@ textarea {
 }
 
 .details-popup {
-    display: none; /* Kezdetben el van rejtve */
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
+    background-color: #e2eceb;
     padding: 40px;
+    border-radius: 20px;
+    border: 2px solid #425c5a;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    width: 600px;  /* Növeld a szélességet */
-    max-width: 90%;  /* 90%-os max szélesség, hogy kisebb képernyőkön is alkalmazkodjon */
-    height: 600px;  /* Állíts be egy magasságot, ha szükséges */
-    overflow-y: auto; /* Görgethetővé teszi a tartalmat, ha túl nagy */
+    width: 600px;
+    max-width: 90%;
+    height: auto;
+    overflow-y: auto;
 }
 
-/* Overlay háttér */
+.details-popup img {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 20px;
+}
+
 .overlay {
-    display: none; /* Kezdetben el van rejtve */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -191,8 +210,6 @@ textarea {
     z-index: 999;
 }
 
-
-/* Popup bezáró gomb */
 .close-btn {
     position: absolute;
     top: 10px;
@@ -201,7 +218,59 @@ textarea {
     cursor: pointer;
 }
 
+.completed-task {
+    background-color: #ccffcc !important;
+}
+
 .pending-task {
-    background-color: yellow !important;
+    background-color: #ffffcc !important;
+}
+
+.failed-task {
+    background-color: #ffcccc !important;
+}
+
+#new-task-button {
+    font-family: "Playpen Sans", cursive;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    margin: 15% auto;
+    width: 80%;
+    max-width: 500px;
+    background-color: #e2eceb;
+    padding: 40px;
+    border-radius: 20px;
+    border: 2px solid #425c5a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+    .task-form {
+        gap: 10px;
+    }
+    .form-columns {
+        flex-direction: column;
+    }
+    .form-column {
+        flex: none;
+        width: 100%;
+    }
 }
 

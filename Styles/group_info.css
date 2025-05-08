@@ -1,57 +1,223 @@
-.group_info-grid {
-    display: grid;
-    grid-template-areas:
-        "header header header"
-        "info members manage"
-        "tasks tasks tasks"
-        "tasks tasks tasks";
+.columns {
+    display: flex;
     gap: 20px;
-    padding: 20px;
 }
 
-.info {
-    grid-area: info;
+.column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.info, .members, .manage, .tasks {
     background: #fff;
+    color: #425c5a;
+    margin-top: 20px;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
 }
 
-.members {
-    grid-area: members;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.members ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
 }
 
-.manage {
-    grid-area: manage;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.task-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    transition: 0.3s;
 }
 
-.tasks {
-    grid-area: tasks;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.task-item:hover{
+    background: #f9f9f9;
 }
 
-/* Responsive design */
+.task-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.task-name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.task-deadline {
+    font-size: 1em;
+    flex: 1;
+    color: #999999;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+input[type="text"], input[type="date"], textarea{
+    width: 50%;
+    padding: 10px;
+    margin: 10px 0 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    font-size: 14px;
+    outline: none;
+    color: #425c5a;
+    background-color: #f1f1f1;
+}
+
+textarea {
+    resize: vertical;
+    border-radius: 20px;
+    min-height: 100px;
+    max-height: 150px;
+    padding: 10px;
+}
+
+select {
+    background: #ffffff;
+    margin-right: 10px;
+    padding: 0 10px;
+    color: #3c5654;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+button {
+    background: #425c5a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:disabled {
+    background-color: #425c5a;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #e2eceb;
+    padding: 40px;
+    border-radius: 20px;
+    border: 2px solid #425c5a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 600px;
+    max-width: 90%;
+    height: auto;
+    overflow-y: auto;
+}
+.overlay {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 1000;
+}
+.close-btn {
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+#task-details-subtasks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#task-details-subtasks ul {
+    list-style-type: none;
+    padding: 0;
+    background: white;
+}
+
+#task-details-subtasks li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: white;
+    color: #425c5a;
+    margin: 5px 0;
+    border-radius: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+
 
 @media (max-width: 768px) {
-    .group_info-grid {
-        grid-template-areas:
-            "header"
-            "info"
-            "members"
-            "manage"
-            "tasks";
-        grid-template-columns: 1fr;
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .task-summary {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .task-name {
+        width: 100%;
+        white-space: normal;
+        overflow: visible;
+    }
+
+    .task-deadline {
+        width: 100%;
+        white-space: normal;
+        overflow: visible;
+    }
+
+    .task-item:hover {
+        background: #fff;
+    }
+
+    .task-summary {
+        gap: 0;
+    }
+
+    .task-name {
+        font-size: 1.2em;
+    }
+
+    .task-deadline {
+        font-size: 1em;
+    }
+
+    .task-item {
+        padding: 10px;
+    }
+
+    .popup {
+        width: 90%;
+        padding: 20px;
+    }
+    form {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
     }
 }
 

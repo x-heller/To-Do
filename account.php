@@ -2,7 +2,6 @@
 session_start();
 require 'connect.php';
 
-// Redirect if user not logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: welcome.php");
     exit;
@@ -17,9 +16,9 @@ if (!$user) {
     exit;
 }
 
-$message = ''; // Initialize message
+$message = '';
 
-// Handle password change
+// Password change
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['old_password'], $_POST['new_password'], $_POST['confirm_password'])) {
     $old_password = $_POST['old_password'];
     $new_password = $_POST['new_password'];
@@ -41,9 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['old_password'], $_POST
     }
 }
 
-// Handle verification toggle
+// Verification toggle
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['verification_toggle'])) {
-    $verification_status = isset($_POST['verification']) && $_POST['verification'] === 'on'; // Checkbox értéke
+    $verification_status = isset($_POST['verification']) && $_POST['verification'] === 'on';
     $users->updateOne(
         ['_id' => new MongoDB\BSON\ObjectId($user_id)],
         ['$set' => ['verification' => $verification_status]]
@@ -53,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['verification_toggle'])
 }
 
 
-// Handle profile picture upload
+// Profile picture upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) {
     $imageFile = $_FILES['profile_picture'];
     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -75,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
         $uniqueName = $user_id . '_' . time() . '.' . $ext; // Unique file name
         $imagePath = $uploadDir . $uniqueName;
 
-        // Delete the old profile picture if it exists
+        // Delete the old profile picture
         if (isset($user['profile_picture']) && strpos($user['profile_picture'], $uploadDir) === 0 && file_exists($user['profile_picture'])) {
             unlink($user['profile_picture']);
         }
@@ -94,7 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
     }
 }
 
-// Set profile picture path
 $profilePictureSrc = isset($user['profile_picture']) ? htmlspecialchars($user['profile_picture']) : 'path/to/default/profile-picture.jpg';
 
 // User XP and level
@@ -115,6 +113,7 @@ $xp_progress = $xp % 100;
 <body>
 <?php include 'Includes/header.php'; ?>
 <?php include 'sidebar.php'; ?>
+<?php include 'Includes/language.php'; ?>
 
 <div class="main-content">
     <!-- Account Details -->
@@ -123,13 +122,13 @@ $xp_progress = $xp % 100;
             <div class="account-details">
                 <div class="profile-picture">
                     <img src="<?php echo $profilePictureSrc; ?>" alt="Profile Picture">
-                    <div class="overlay">Change Picture</div>  <!-- A szöveg megjelenik hover esetén -->
+                    <div class="overlay"><?= htmlspecialchars($texts['account']['change-picture']) ?></div>  <!-- A szöveg megjelenik hover esetén -->
                 </div>
 
                 <h1><strong><?php echo htmlspecialchars($user['username']); ?></strong></h1><br>
-                <p><strong>First Name:</strong> <?php echo htmlspecialchars($user['first_name']); ?></p>
-                <p><strong>Last Name:</strong> <?php echo htmlspecialchars($user['last_name']); ?></p>
-                <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+                <p><strong><?= htmlspecialchars($texts['account']['first-name']) ?></strong> <?php echo htmlspecialchars($user['first_name']); ?></p>
+                <p><strong><?= htmlspecialchars($texts['account']['last-name']) ?></strong> <?php echo htmlspecialchars($user['last_name']); ?></p>
+                <p><strong><?= htmlspecialchars($texts['account']['email']) ?></strong> <?php echo htmlspecialchars($user['email']); ?></p>
 
                 <form method="POST" enctype="multipart/form-data">
                     <input type="file" name="profile_picture" accept="image/*" style="display: none;">
@@ -140,8 +139,8 @@ $xp_progress = $xp % 100;
 
             <!-- Level Progress -->
             <div class="level">
-                <h2><strong>Level:</strong> <?php echo $level; ?></h2><br>
-                <p><strong>XP Progress:</strong> <?php echo $xp_progress; ?>/100</p>
+                <h2><strong><?= htmlspecialchars($texts['account']['level']) ?></strong> <?php echo $level; ?></h2><br>
+                <p><strong><?= htmlspecialchars($texts['account']['xp']) ?></strong> <?php echo $xp_progress; ?>/100</p>
                 <div class="progress-bar">
                     <div class="progress" style="width: <?php echo $xp_progress; ?>%;"></div>
                 </div>
@@ -150,29 +149,29 @@ $xp_progress = $xp % 100;
         <div class="column">
             <!-- Change Password -->
             <div class="change-password">
-                <h2>Change Password</h2><br>
+                <h2><?= htmlspecialchars($texts['account']['change-password']) ?></h2><br>
                 <form method="POST">
-                    <label for="old_password">Old Password</label><br>
+                    <label for="old_password"><?= htmlspecialchars($texts['account']['old-password']) ?></label><br>
                     <input type="password" id="old_password" name="old_password" required><br>
 
-                    <label for="new_password">New Password</label><br>
+                    <label for="new_password"><?= htmlspecialchars($texts['account']['new-password']) ?></label><br>
                     <input type="password" id="new_password" name="new_password" required><br>
 
-                    <label for="confirm_password">Confirm New Password</label><br>
+                    <label for="confirm_password"><?= htmlspecialchars($texts['account']['confirm-new-password']) ?></label><br>
                     <input type="password" id="confirm_password" name="confirm_password" required><br>
 
-                    <button type="submit">Change Password</button>
+                    <button type="submit"><?= htmlspecialchars($texts['account']['change-password']) ?></button>
                 </form>
             </div>
 
             <!-- Verification -->
             <div class="verification">
-                <h2>Verification</h2><br>
+                <h2><?= htmlspecialchars($texts['account']['verification']) ?></h2><br>
                 <form method="POST">
                     <input type="hidden" name="verification_toggle" value="1">
                     <label>
                         <input type="checkbox" name="verification" <?php echo $user['verification'] ? 'checked' : ''; ?>>
-                        Verify my account
+                        <?= htmlspecialchars($texts['account']['verify']) ?>
                     </label><br>
                     <button type="submit">Save</button>
                 </form>
@@ -180,9 +179,6 @@ $xp_progress = $xp % 100;
         </div>
     </div>
 
-
-
-    <!-- Display Messages -->
     <?php if (!empty($message)): ?>
         <div class="message"><?php echo htmlspecialchars($message); ?></div>
     <?php endif; ?>

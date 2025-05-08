@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const selectedLang = this.value;
         fetch(`Includes/language.php?lang=${selectedLang}`)
             .then(() => {
-                location.reload(); // Oldal újratöltése az új nyelvvel
+                location.reload();
             });
     });
 });

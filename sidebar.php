@@ -4,7 +4,11 @@ $current_page = basename($_SERVER['PHP_SELF'], ".php");
 $profilePictureSrc = isset($user['profile_picture']) ? htmlspecialchars($user['profile_picture']) : 'path/to/default/profile-picture.jpg';
 
 ?>
+
+
 <div class="sidebar">
+    <div class="sidebar-icon" onclick="toggleSidebar()">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAOVJREFUWEft1lEOgyAMBuAW8B7zJvOkO8p2FO5hMhaSsZCFWFta4gO+oubzL9QiXOzCi3lggqiKzIRmQvue7iFARMRIpdFaV91DGYMuPQEgeoebBKUGqjDlw0UoFVAD80MF71ZO6bpBBxhIb9yWBV/DQNqYDBcnZIERg6wwIpAlhg2yxrBAIzAS0AMAbv/H2DtcJV25+9fxTckUxT721ig2KMdsiRKBLFFikBWqC2SB6gYRqDh8/Ci9pLHR2RhWYzwz01Qo4CZT3q9SshqbUdyhrH5eHXQmyaN7JohKcCY0E6ISoNY//FqQJeIDKqMAAAAASUVORK5CYII="/>    </div>
     <div class="profile">
         <img src="<?php echo $profilePictureSrc; ?>" alt="Profile Picture">
         <h2><?php echo htmlspecialchars($user['username']); ?></h2>
@@ -31,6 +35,7 @@ $profilePictureSrc = isset($user['profile_picture']) ? htmlspecialchars($user['p
             </li>
             <li <?php echo $current_page === 'groups' ? 'class="active"' : ''; ?>>
                 <a href="groups.php">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAORJREFUSEvtldENwjAMRK+bwCYwCTAJMAkwCWwCm0AOJZLlxrEDyl8tVUIQ7uznazthcE2D9bEYuIQtRCsARwD7dL0APACc82dXVB6wDO5JdKOUaLTuUk9d1QzY9cUQ2uZp+PPbMftq1wyI5mT8md8T1V8GRENEtToAuPZgqk3ABROR3gEXTURd1UrRLqMqKWL3ulp7MHfQ0+FPBkTDRUtEZYqbSFGoEY2oFdEiKJPkmkiDVnq0UOR+mO2AyeEEkZKJsvYwM3imjDOikQo/NiQi79bXxqF3SehQZCTrzGLg0huO6AMfnCQZ8LzydwAAAABJRU5ErkJggg=="/>
                     Groups
                 </a>
             </li>
@@ -40,15 +45,12 @@ $profilePictureSrc = isset($user['profile_picture']) ? htmlspecialchars($user['p
                     Profile
                 </a>
             </li>
+            <li><a href="logout.php">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAMFJREFUSEvVld0NwjAMhL9uApuUSYBJaCdhFNikbAIcJFKKVGJHidTmJQ+x7+zzTzoan64xPqsh6IELoDt37sD4ttVtzmACdjnk5F3gBw/BMzhbJJ3ZWhyEvU2CK3AO0lTNQMUUuDrGKmFa/781EOgtsa5KcAqRO7rxY/obxGIGGqTBi+4hELb0l0RxqKpKFINPSZoQxEyOYadsd9AWezvTCOvcRd51/QD2nnWtCdf6sPwJRR9Owfx9XUr63EXWnOAFtkQoGYmuDuMAAAAASUVORK5CYII="/>
+                    Logout
+                </a>
+            </li>
+
         </ul>
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <ul class="logout">
-                <li><a href="logout.php">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAMFJREFUSEvVld0NwjAMhL9uApuUSYBJaCdhFNikbAIcJFKKVGJHidTmJQ+x7+zzTzoan64xPqsh6IELoDt37sD4ttVtzmACdjnk5F3gBw/BMzhbJJ3ZWhyEvU2CK3AO0lTNQMUUuDrGKmFa/781EOgtsa5KcAqRO7rxY/obxGIGGqTBi+4hELb0l0RxqKpKFINPSZoQxEyOYadsd9AWezvTCOvcRd51/QD2nnWtCdf6sPwJRR9Owfx9XUr63EXWnOAFtkQoGYmuDuMAAAAASUVORK5CYII="/>
-                        Logout
-                    </a>
-                </li>
-            </ul>
-        <?php endif; ?>
     </nav>
 </div>

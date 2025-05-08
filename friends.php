@@ -2,10 +2,6 @@
 session_start();
 require 'connect.php';
 
-/*ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);*/
-
 if (!isset($_SESSION['user_id'])) {
     header("Location: welcome.php");
     exit;
@@ -43,10 +39,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['friend_id'])) {
                 'type' => 'friend_request',
                 'status' => 'pending'
             ]);
-            echo "Friend request sent.";
-        } else {
+            //echo "Friend request sent.";
+        } /*else {
             echo "Friend request already sent.";
-        }
+        }*/
     }
 }
 
@@ -101,19 +97,20 @@ $friends_tasks = $taskCollection->find([
 <body>
 <?php include 'Includes/header.php'; ?>
 <?php include 'sidebar.php'; ?>
+<?php include 'Includes/language.php'; ?>
 
 <div class="main-content">
     <div class="columns">
         <div class="column">
             <!-- Search and Add Friends Section -->
             <div class="search-section">
-                <h2>Search for users</h2>
+                <h2><?= htmlspecialchars($texts['friends']['search-title']) ?></h2>
                 <form method="GET" action="friends.php">
-                    <input type="text" name="search" placeholder="Search users">
-                    <button type="submit">Search</button>
+                    <input type="text" name="search" placeholder="<?= htmlspecialchars($texts['friends']['search-placeholder']) ?>">
+                    <button type="submit"><?= htmlspecialchars($texts['friends']['search']) ?></button>
                 </form>
 
-                <h3>Search Results</h3>
+                <h3><?= htmlspecialchars($texts['friends']['search-results']) ?></h3>
                 <div class="search-results">
                     <?php if ($search_results): ?>
                         <ul>
@@ -122,7 +119,7 @@ $friends_tasks = $taskCollection->find([
                                     <?php echo htmlspecialchars($result['username']); ?>
                                     <form method="POST" action="friends.php" style="display:inline;">
                                         <input type="hidden" name="friend_id" value="<?php echo $result['_id']; ?>">
-                                        <button type="submit">Send Friend Request</button>
+                                        <button type="submit"><?= htmlspecialchars($texts['friends']['send-friend-request']) ?></button>
                                     </form>
                                 </li>
                             <?php endforeach; ?>
@@ -137,19 +134,7 @@ $friends_tasks = $taskCollection->find([
         <div class="column">
             <!-- Existing Friends Section -->
             <div class="friends-section">
-                <h2>Your Friends</h2>
-                <!--<ul>
-                <?php /*foreach ($current_friends as $friend_id):
-                    $friend = $users->findOne(['_id' => new MongoDB\BSON\ObjectId($friend_id)]); */?>
-                    <li>
-                        <?php /*echo htmlspecialchars($friend['username']); */?>
-                        <form method="POST" action="friends.php" style="display:inline;">
-                            <input type="hidden" name="remove_friend_id" value="<?php /*echo $friend['_id']; */?>">
-                            <button type="submit">Remove Friend</button>
-                        </form>
-                    </li>
-                <?php /*endforeach; */?>
-            </ul>-->
+                <h2><?= htmlspecialchars($texts['friends']['friend-title']) ?></h2>
                 <ul>
                     <?php foreach ($current_friends as $friend_id):
                         $friend = $users->findOne(['_id' => new MongoDB\BSON\ObjectId($friend_id)]);
@@ -165,7 +150,7 @@ $friends_tasks = $taskCollection->find([
                             </a>
                             <form method="POST" action="friends.php" style="display:inline;">
                                 <input type="hidden" name="remove_friend_id" value="<?php echo $friend['_id']; ?>">
-                                <button type="submit">Remove Friend</button>
+                                <button type="submit"><?= htmlspecialchars($texts['friends']['remove-friend']) ?></button>
                             </form>
 
                             <!-- Hover Information -->
@@ -174,19 +159,6 @@ $friends_tasks = $taskCollection->find([
                                 <p><strong><?php echo $fullName; ?></strong></p>
                                 <p>@<?php echo $username; ?></p>
                             </div>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-            <!-- Friends' Tasks Section -->
-            <div class="tasks-section">
-                <h2>Friends' Tasks</h2>
-                <ul>
-                    <?php foreach ($friends_tasks as $task): ?>
-                        <li>
-
-                            <?php echo htmlspecialchars($task['name']); ?>
-                            <p><?php echo htmlspecialchars($task['description']); ?></p>
                         </li>
                     <?php endforeach; ?>
                 </ul>

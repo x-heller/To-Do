@@ -33,20 +33,6 @@
     margin-top: 10px;
 }
 
-.search-section button {
-    background: #425c5a;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.search-section button:hover {
-    background-color: #0056b3;
-}
-
 .search-results ul, .friends-section ul {
     list-style: none;
     padding: 0;
@@ -93,7 +79,7 @@ button:hover {
 .friend-hover {
     display: none;
     position: absolute;
-    top: 100%; /* Az elem alatt jelenjen meg */
+    top: 100%;
     transform: translateX(-50%);
     background-color: #fff;
     border: 1px solid #ddd;
@@ -120,4 +106,12 @@ button:hover {
 
 .friend-item:hover .friend-hover {
     display: block;
+}
+
+.friend-item a {
+    text-decoration: none;
+}
+.friend-item a {
+    color: #425c5a;
+    font-weight: bold;
 }

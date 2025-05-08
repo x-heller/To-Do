@@ -1,61 +1,33 @@
-.index-grid {
-    display: grid;
-    grid-template-areas:
-        "welcome-card welcome-card day-info"
-        "stats tasks tasks"
-        "notifications notifications notifications";
-    gap: 20px;
-    padding: 20px;
-}
-
-.welcome-card {
-    grid-area: welcome-card;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.day-info {
-    grid-area: day-info;
-    background: #fff;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.tasks {
-    grid-area: tasks;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.stat-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.stats {
-    grid-area: stats;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.stat-box p {
+    font-weight: bold;
+    color: #3c5654;
+    font-size: 18px;
+    margin: 5px 0;
 }
 
-.notifications {
-    grid-area: notifications;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Responsive design */
 @media (max-width: 768px) {
-    .account-grid {
-        grid-template-areas:
-            "account-details"
-            "level"
-            "change-password"
-            "verification";
-        grid-template-columns: 1fr;
+    .stat-box {
+        width: 100%;
+        margin: 10px 0;
     }
 }

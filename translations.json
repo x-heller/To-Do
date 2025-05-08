@@ -1,23 +1,4 @@
 {
-  "hu": {
-    "welcome-message": "Üdvözöllek! Jelentkezz be vagy regisztrálj.",
-    "login-title": "Bejelentkezés",
-    "login-button": "Bejelentkezés",
-    "register-title": "Regisztráció",
-    "register-button": "Regisztráció",
-    "show-register": "Regisztráció",
-    "show-login": "Bejelentkezés",
-    "have-account": "Már van fiókod?",
-    "no-account": "Még nincs fiókod?",
-    "placeholder": {
-      "username": "Felhasználónév",
-      "password": "Jelszó",
-      "confirm-password": "Jelszó megerősítése",
-      "email": "E-mail",
-      "first-name": "Keresztnév",
-      "last-name": "Vezetéknév"
-    }
-  },
   "en": {
     "welcome-message": "Welcome! Please log in or register.",
     "login-title": "Login",
@@ -35,8 +16,440 @@
       "email": "E-mail",
       "first-name": "First name",
       "last-name": "Last name"
+    },
+
+    "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "title": "Welcome, ",
+    "todays-date": "Today's date",
+
+    "friend-count-s": "You have ",
+    "friend-count-e": " friends.",
+    "friend-count-0": "You have no friends. Add some!",
+    "friend-view": "View friends",
+
+    "group-count-s": "You are in ",
+    "group-count-e": " groups.",
+    "group-count-0": "You are not a member of any groups. Create or join one!",
+    "group-view": "View groups",
+
+    "task-count-s": "You have ",
+    "task-count-e": " tasks for today.",
+    "task-count-0": "You have no tasks for today.",
+    "task-view": "View tasks",
+
+    "tasks": {
+      "title": "Your tasks",
+      "new-task": "New task",
+      "task-name": "Task name:",
+      "task-description": "Description:",
+      "task-deadline": "Deadline:",
+      "assign": "Assign to Friends:",
+      "add-task": "Add Task",
+      "verification-image": "Verification image:",
+      "assigned-friends": "Assigned friends:",
+      "confirm-delete": "Are you sure you want to delete this task?",
+      "delete": "Delete",
+      "cancel": "cancel",
+      "delete-task": "Confirm task deletion"
+    },
+
+    "account": {
+      "change-picture": "Change picture",
+      "username": "Username:",
+      "email": "E-mail:",
+      "first-name": "First name:",
+      "last-name": "Last name:",
+      "level": "Level:",
+      "xp": "XP:",
+      "change-password": "Change password",
+      "old-password": "Old password:",
+      "new-password": "New password:",
+      "confirm-new-password": "Confirm new password:",
+      "verification": "Verification",
+      "verify": "Verify my account",
+      "save": "Save"
+    },
+
+    "friends": {
+      "search-title": "Search for users",
+      "search-placeholder": "Search users",
+      "search": "Search",
+      "search-results": "Search results",
+      "send-friend-request": "Send friend request",
+      "friend-title": "Your friends",
+      "remove-friend": "Remove friend"
+    },
+
+    "friend-info": {
+      "first-name": "First name:",
+      "last-name": "Last name:",
+      "email": "E-mail:",
+      "level": "Level:",
+      "xp": "XP:",
+      "verified": "Verified account",
+      "not-verified": "Not verified account",
+      "pending-tasks": "Pending tasks",
+      "no-pending-tasks": "No pending tasks",
+      "task-status": "Task status:",
+      "back": "Back to friends"
+    },
+
+    "groups": {
+      "title": "Groups",
+      "group-count-s": "You are in ",
+      "group-count-e": " groups.",
+      "join-group": "Create or join a group",
+      "create-title": "Create a group",
+      "create-name": "Group name:",
+      "create-description": "Description:",
+      "create-button": "Create group",
+      "join-title": "Join a group",
+      "join-code": "Enter invitation code to join:",
+      "join-button": "Join group",
+      "groups-title": "Your groups",
+      "group-info": "Group info",
+      "no-groups": "You are not a member of any groups. Create or join one!"
+    },
+
+    "group-info": {
+      "title": "Group info",
+      "group-name": "Group name:",
+      "group-description": "Description:",
+      "created-by": "Created by:",
+      "code": "Invitation code:",
+      "members": "Members:",
+      "remove": "Remove",
+      "manage": "Manage Group",
+      "leave": "Leave Group",
+      "delete": "Delete Group",
+      "new-name": "New group name",
+      "task-title": "Tasks",
+      "active-tasks": "Active tasks: 2/",
+      "create-task": "Create task",
+      "completed" : "Completed",
+      "subtask-completed" : "Subtask completed",
+      "back": "Back to groups",
+      "create-task-title": "Create task",
+      "create-task-name": "Task name",
+      "create-task-description": "Task description",
+      "subtasks": "Subtasks",
+      "subtask-name": "Subtask name",
+      "subtask-add": "Add subtask",
+      "create-task-button": "Create task",
+      "complete" : "Complete"
+    },
+
+    "notifications": {
+      "title": "Notifications",
+      "no-notifications": "No pending notifications",
+      "new-friend-request": "New friend request from: ",
+      "friend-request-accept": "Accept",
+      "friend-request-decline": "Decline",
+      "task-verification": "Task verification request from: ",
+      "go-to-profile": "Go to profile"
     }
   },
+
+  "hu": {
+    "welcome-message": "Üdvözöllek! Jelentkezz be vagy regisztrálj.",
+    "login-title": "Bejelentkezés",
+    "login-button": "Bejelentkezés",
+    "register-title": "Regisztráció",
+    "register-button": "Regisztráció",
+    "show-register": "Regisztráció",
+    "show-login": "Bejelentkezés",
+    "have-account": "Már van fiókod?",
+    "no-account": "Még nincs fiókod?",
+    "placeholder": {
+      "username": "Felhasználónév",
+      "password": "Jelszó",
+      "confirm-password": "Jelszó megerősítése",
+      "email": "E-mail",
+      "first-name": "Keresztnév",
+      "last-name": "Vezetéknév"
+    },
+    "days": ["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat", "Vasárnap"],
+    "title": "Üdvözöllek, ",
+    "todays-date": "Mai dátum",
+
+    "friend-count-s": "Jelenleg ",
+    "friend-count-e": " barátod van.",
+    "friend-count-0": "Jelenleg incsenek barátaid. Adj hozzá néhányat!",
+    "friend-view": "Barátok megtekintése",
+
+    "group-count-s": "Tagja vagy ",
+    "group-count-e": " csoportnak.",
+    "group-count-0": "Jelenleg nem vagy tagja egyetlen csoportnak sem. Hozz létre vagy csatlakozz egyhez!",
+    "group-view": "Csoportok megtekintése",
+
+    "task-count-s": "Ma ",
+    "task-count-e": " feladatod van.",
+    "task-count-0": "Ma nincs feladatod.",
+    "task-view": "Feladatok megtekintése",
+
+    "tasks": {
+      "title": "Feladataid",
+      "new-task": "Új feladat",
+      "task-name": "Feladat neve:",
+      "task-description": "Leírás:",
+      "task-deadline": "Határidő:",
+      "assign": "Barátok hozzáadása:",
+      "add-task": "Feladat hozzáadása",
+      "verification-image": "Hitelesítési kép:",
+      "assigned-friends": "Hozzárendelt barátok:",
+        "confirm-delete": "Biztosan törölni szeretnéd ezt a feladatot?",
+        "delete": "Törlés",
+        "cancel": "Mégse",
+        "delete-task": "Feladat törlésének megerősítése"
+    },
+
+    "account": {
+      "change-picture": "Kép módosítása",
+      "username": "Felhasználónév:",
+      "email": "E-mail:",
+      "first-name": "Keresztnév:",
+      "last-name": "Vezetéknév:",
+      "level": "Szint:",
+      "xp": "XP:",
+      "change-password": "Jelszó módosítása",
+      "old-password": "Régi jelszó:",
+      "new-password": "Új jelszó:",
+      "confirm-new-password": "Új jelszó megerősítése:",
+      "verification": "Hitelesítés",
+      "verify": "Fiók hitelesítése",
+      "save": "Mentés"
+    },
+
+    "friends": {
+      "search-title": "Felhasználók keresése",
+      "search-placeholder": "Felhasználók keresése",
+      "search": "Keresés",
+      "search-results": "Keresési eredmények",
+      "send-friend-request": "Barátkérelem küldése",
+      "friend-title": "Barátaid",
+      "remove-friend": "Barát eltávolítása"
+    },
+
+    "friend-info": {
+      "first-name": "Keresztnév:",
+      "last-name": "Vezetéknév:",
+      "email": "E-mail:",
+      "level": "Szint:",
+      "xp": "XP:",
+      "verified": "Hitelesített fiók",
+      "not-verified": "Nem hitelesített fiók",
+        "pending-tasks": "Függő feladatok",
+        "no-pending-tasks": "Nincsenek függő feladatok",
+        "task-status": "Feladat állapota:",
+        "back": "Vissza a barátokhoz"
+    },
+
+    "groups": {
+      "title": "Csoportok",
+      "group-count-s": "Tagja vagy ",
+      "group-count-e": " csoportnak.",
+      "join-group": "Csoport létrehozása vagy csatlakozás",
+      "create-title": "Csoport létrehozása",
+      "create-name": "Csoport neve:",
+      "create-description": "Leírás:",
+      "create-button": "Csoport létrehozása",
+      "join-title": "Csatlakozás egy csoporthoz",
+      "join-code": "Írd be a meghívó kódot a csatlakozáshoz:",
+      "join-button": "Csatlakozás a csoporthoz",
+      "groups-title": "Csoportjaid",
+      "group-info": "Csoport információ",
+      "no-groups": "Nem vagy tagja egyetlen csoportnak sem. Hozz létre vagy csatlakozz egyhez!"
+    },
+
+    "group-info": {
+      "title": "Csoport információ",
+      "group-name": "Csoport neve:",
+      "group-description": "Leírás:",
+      "created-by": "Létrehozta:",
+      "code": "Meghívó kód:",
+      "members": "Tagok:",
+      "remove": "Eltávolítás",
+      "manage": "Csoport kezelése",
+      "leave": "Csoport elhagyása",
+      "delete": "Csoport törlése",
+      "new-name": "Új csoportnév",
+      "task-title": "Feladatok",
+      "active-tasks": "Aktív feladatok: 2/",
+      "create-task": "Feladat létrehozása",
+      "completed" : "Teljesítve",
+      "subtask-completed" : "Alfeladat teljesítve",
+      "back": "Vissza a csoportokhoz",
+      "create-task-title": "Feladat létrehozása",
+      "create-task-name": "Feladat neve",
+      "create-task-description": "Feladat leírása",
+      "subtasks": "Alfeladatok",
+      "subtask-name": "Alfeladat neve",
+      "subtask-add": "Alfeladat hozzáadása",
+      "create-task-button": "Feladat étrehozása",
+      "complete" : "Teljesítve"
+    },
+
+    "notifications": {
+      "title": "Értesítések",
+      "no-notifications": "Nincsenek függő értesítések",
+      "new-friend-request": "Új barátkérés érkezett: ",
+      "friend-request-accept": "Elfogad",
+      "friend-request-decline": "Elutasít",
+      "task-verification": "Feladat hitelesítési kérelem érkezett: ",
+      "go-to-profile": "Profil megtekintése"
+    }
+  },
+
+  "sk": {
+    "welcome-message": "Vitajte! Prihláste sa alebo sa zaregistrujte.",
+    "login-title": "Prihlásenie",
+    "login-button": "Prihlásiť sa",
+    "register-title": "Registrácia",
+    "register-button": "Registrovať sa",
+    "show-register": "Registrovať sa",
+    "show-login": "Prihlásiť sa",
+    "have-account": "Už máte účet?",
+    "no-account": "Ešte nemáte účet?",
+    "placeholder": {
+      "username": "Používateľské meno",
+      "password": "Heslo",
+      "confirm-password": "Potvrďte heslo",
+      "email": "E-mail",
+      "first-name": "Meno",
+      "last-name": "Priezvisko"
+    },
+    "days": ["Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota", "Nedeľa"],
+    "title": "Vitajte, ",
+    "todays-date": "Dnešný dátum",
+
+    "friend-count-s": "Máte ",
+    "friend-count-e": " priateľov.",
+    "friend-count-0": "Nemáte žiadnych priateľov. Pridajte si niektorých!",
+    "friend-view": "Zobraziť priateľov",
+
+    "group-count-s": "Ste v ",
+    "group-count-e": " skupinách.",
+    "group-count-0": "Nie ste členom žiadnej skupiny. Vytvorte alebo sa pripojte k jednej!",
+    "group-view": "Zobraziť skupiny",
+
+    "task-count-s": "Máte ",
+    "task-count-e": " úloh na dnes.",
+    "task-count-0": "Nemáte žiadne úlohy na dnes.",
+    "task-view": "Zobraziť úlohy",
+
+    "tasks": {
+      "title": "Vaše úlohy",
+      "new-task": "Nová úloha",
+      "task-name": "Názov úlohy:",
+      "task-description": "Popis:",
+      "task-deadline": "Termín:",
+      "assign": "Priradiť kamarátom:",
+      "add-task": "Pridať úlohu",
+      "verification-image": "Obrázok na overenie:",
+      "assigned-friends": "Priradení priatelia:",
+        "confirm-delete": "Ste si istý, že chcete zmazať túto úlohu?",
+        "delete": "Zmazať",
+        "cancel": "Zrušiť",
+        "delete-task": "Potvrdiť zmazanie úlohy"
+    },
+
+    "account": {
+      "change-picture": "Zmeniť obrázok",
+      "username": "Používateľské meno:",
+      "email": "E-mail:",
+      "first-name": "Meno:",
+      "last-name": "Priezvisko:",
+      "level": "Úroveň:",
+      "xp": "XP:",
+      "change-password": "Zmeniť heslo",
+      "old-password": "Staré heslo:",
+      "new-password": "Nové heslo:",
+      "confirm-new-password": "Potvrďte nové heslo:",
+      "verification": "Overenie",
+      "verify": "Overiť môj účet",
+      "save": "Uložiť"
+    },
+
+    "friends": {
+      "search-title": "Hľadať používateľov",
+      "search-placeholder": "Hľadať používateľov",
+      "search": "Hľadať",
+      "search-results": "Výsledky hľadania",
+      "send-friend-request": "Pridať priateľa",
+      "friend-title": "Vaši priatelia",
+      "remove-friend": "Odstrániť priateľa"
+    },
+
+    "friend-info": {
+      "first-name": "Meno:",
+      "last-name": "Priezvisko:",
+      "email": "E-mail:",
+      "level": "Úroveň:",
+      "xp": "XP:",
+      "verified": "Overený účet",
+      "not-verified": "Neoverený účet",
+        "pending-tasks": "Čakajúce úlohy",
+        "no-pending-tasks": "Žiadne čakajúce úlohy",
+        "task-status": "Stav úlohy:",
+        "back": "Späť k priateľom"
+    },
+
+    "groups": {
+      "title": "Skupiny",
+      "group-count-s": "Ste v ",
+      "group-count-e": " skupinách.",
+      "join-group": "Vytvoriť alebo sa pripojiť do skupiny",
+      "create-title": "Vytvoriť skupinu",
+      "create-name": "Názov skupiny:",
+      "create-description": "Popis:",
+      "create-button": "Vytvoriť skupinu",
+      "join-title": "Pripojiť sa do skupiny",
+      "join-code": "Zadajte pozývací kód na pripojenie:",
+      "join-button": "Pripojiť sa do skupiny",
+      "groups-title": "Vaše skupiny",
+      "group-info": "Informácie o skupine",
+      "no-groups": "Nie ste členom žiadnej skupiny. Vytvorte alebo sa pripojte k jednej!"
+    },
+
+    "group-info": {
+      "title": "Informácie o skupine",
+      "group-name": "Názov skupiny:",
+      "group-description": "Popis:",
+      "created-by": "Vytvorené:",
+      "code": "Pozývací kód:",
+      "members": "Členovia:",
+      "remove": "Odstrániť",
+      "manage": "Spravovať skupinu",
+      "leave": "Opustiť skupinu",
+      "delete": "Zmazať skupinu",
+      "new-name": "Nový názov skupiny",
+      "task-title": "Úlohy",
+      "active-tasks": "Aktívne úlohy: 2/",
+      "create-task": "Vytvoriť úlohu",
+      "completed" : "Dokončené",
+      "subtask-completed" : "Podúloha dokončená",
+      "back": "Späť do skupín",
+      "create-task-title": "Vytvoriť úlohu",
+      "create-task-name": "Názov úlohy",
+      "create-task-description": "Popis úlohy",
+      "subtasks": "Podúlohy",
+      "subtask-name": "Názov podúlohy",
+      "subtask-add": "Pridať podúlohu",
+      "create-task-button": "Vytvoriť úlohu",
+      "complete" : "Dokončiť"
+    },
+
+    "notifications": {
+      "title": "Oznámenia",
+      "no-notifications": "Žiadne čakajúce oznámenia",
+      "new-friend-request": "Nová žiadosť o priateľstvo od: ",
+      "friend-request-accept": "Prijať",
+      "friend-request-decline": "Odmietnuť",
+      "task-verification": "Žiadosť o overenie úlohy od: ",
+        "go-to-profile": "Prejsť na profil"
+    }
+  },
+
   "de": {
     "welcome-message": "Willkommen! Bitte einloggen oder registrieren.",
     "login-title": "Einloggen",
@@ -54,6 +467,137 @@
       "email": "E-Mail",
       "first-name": "Vorname",
       "last-name": "Nachname"
+    },
+    "days": ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"],
+    "title": "Willkommen, ",
+    "todays-date": "Heutiges Datum",
+
+    "friend-count-s": "Sie haben ",
+    "friend-count-e": " Freunde.",
+    "friend-count-0": "Sie haben keine Freunde. Fügen Sie einige hinzu!",
+    "friend-view": "Freunde anzeigen",
+
+    "group-count-s": "Sie sind in ",
+    "group-count-e": " Gruppen.",
+    "group-count-0": "Sie sind kein Mitglied einer Gruppe. Erstellen Sie eine oder treten Sie einer bei!",
+    "group-view": "Gruppen anzeigen",
+
+    "task-count-s": "Sie haben ",
+    "task-count-e": " Aufgaben für heute.",
+    "task-count-0": "Sie haben heute keine Aufgaben.",
+    "task-view": "Aufgaben anzeigen",
+
+    "tasks": {
+      "title": "Ihre Aufgaben",
+      "new-task": "Neue Aufgabe",
+      "task-name": "Aufgabenname:",
+      "task-description": "Beschreibung:",
+      "task-deadline": "Frist:",
+      "assign": "Freunden zuweisen:",
+      "add-task": "Aufgabe hinzufügen",
+      "verification-image": "Verifizierungsbild:",
+      "assigned-friends": "Zugewiesene Freunde:",
+        "confirm-delete": "Sind Sie sicher, dass Sie diese Aufgabe löschen möchten?",
+        "delete": "Löschen",
+        "cancel": "Abbrechen",
+        "delete-task": "Aufgabenlöschung bestätigen"
+    },
+
+    "account": {
+      "change-picture": "Bild ändern",
+      "username": "Benutzername:",
+      "email": "E-Mail:",
+      "first-name": "Vorname:",
+      "last-name": "Nachname:",
+      "level": "Level:",
+      "xp": "XP:",
+      "change-password": "Passwort ändern",
+      "old-password": "Altes Passwort:",
+      "new-password": "Neues Passwort:",
+      "confirm-new-password": "Neues Passwort bestätigen:",
+      "verification": "Verifizierung",
+      "verify": "Mein Konto verifizieren",
+      "save": "Speichern"
+    },
+
+    "friends": {
+      "search-title": "Nach Benutzern suchen",
+      "search-placeholder": "Benutzer suchen",
+      "search": "Suchen",
+      "search-results": "Suchergebnisse",
+      "send-friend-request": "Freundschaftsanfrage senden",
+      "friend-title": "Ihre Freunde",
+      "remove-friend": "Freund entfernen"
+    },
+
+    "friend-info": {
+      "first-name": "Vorname:",
+      "last-name": "Nachname:",
+      "email": "E-Mail:",
+      "level": "Level:",
+      "xp": "XP:",
+      "verified": "Verifiziertes Konto",
+      "not-verified": "Nicht verifiziertes Konto",
+        "pending-tasks": "Ausstehende Aufgaben",
+        "no-pending-tasks": "Keine ausstehenden Aufgaben",
+        "task-status": "Aufgabenstatus:",
+        "back": "Zurück zu Freunden"
+    },
+
+    "groups": {
+      "title": "Gruppen",
+      "group-count-s": "Sie sind in ",
+      "group-count-e": " Gruppen.",
+      "join-group": "Gruppe erstellen oder beitreten",
+      "create-title": "Gruppe erstellen",
+      "create-name": "Gruppenname:",
+      "create-description": "Beschreibung:",
+      "create-button": "Gruppe erstellen",
+      "join-title": "Gruppe beitreten",
+      "join-code": "Geben Sie den Einladungscode ein, um beizutreten:",
+      "join-button": "Gruppe beitreten",
+      "groups-title": "Ihre Gruppen",
+      "group-info": "Gruppeninfo",
+      "no-groups": "Sie sind kein Mitglied einer Gruppe. Erstellen Sie eine oder treten Sie einer bei!"
+    },
+
+    "group-info": {
+      "title": "Gruppeninfo",
+      "group-name": "Gruppenname:",
+      "group-description": "Beschreibung:",
+      "created-by": "Erstellt von:",
+      "code": "Einladungscode:",
+      "members": "Mitglieder:",
+      "remove": "Entfernen",
+      "manage": "Gruppe verwalten",
+      "leave": "Gruppe verlassen",
+      "delete": "Gruppe löschen",
+      "new-name": "Neuer Gruppenname",
+      "task-title": "Aufgaben",
+      "active-tasks": "Aktive Aufgaben: 2/",
+      "create-task": "Aufgabe erstellen",
+      "completed" : "Abgeschlossen",
+      "subtask-completed" : "Unteraufgabe abgeschlossen",
+      "back": "Zurück zu Gruppen",
+      "create-task-title": "Aufgabe erstellen",
+      "create-task-name": "Aufgabenname",
+      "create-task-description": "Aufgabenbeschreibung",
+      "subtasks": "Unteraufgaben",
+      "subtask-name": "Unteraufgabenname",
+      "subtask-add": "Unteraufgabe hinzufügen",
+      "create-task-button": "Aufgabe erstellen",
+      "complete" : "Abgeschlossen"
+    },
+
+    "notifications": {
+      "title": "Benachrichtigungen",
+      "no-notifications": "Keine ausstehenden Benachrichtigungen",
+      "new-friend-request": "Neue Freundschaftsanfrage von: ",
+      "friend-request-accept": "Akzeptieren",
+      "friend-request-decline": "Ablehnen",
+      "task-verification": "Aufgabenverifizierungsanfrage von: ",
+        "go-to-profile": "Zum Profil gehen"
     }
   }
+
 }

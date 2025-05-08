@@ -8,8 +8,16 @@
 </head>
 <body>
 
-<?php include 'Includes/header.php'; ?>
 <?php include 'Includes/language.php'; ?>
+
+<header>
+    <select id="language-selector">
+        <option value="en" <?php echo $lang === 'en' ? 'selected' : ''; ?>>English</option>
+        <option value="hu" <?php echo $lang === 'hu' ? 'selected' : ''; ?>>Hungarian</option>
+        <option value="sk" <?php echo $lang === 'sk' ? 'selected' : ''; ?>>Slovak</option>
+        <option value="de" <?php echo $lang === 'de' ? 'selected' : ''; ?>>German</option>
+    </select>
+</header>
 
 <h1><?= $texts['welcome-message'] ?></h1>
 

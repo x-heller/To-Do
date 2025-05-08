@@ -1,24 +1,11 @@
 <?php
-/*session_start();
-*/?><!--
-<nav>
-    <ul>
-        <li><a href="index.php">Home</a></li>
-        <li><a href="tasks.php">Tasks</a></li>
-        <li><a href="account.php">Profile</a></li>
-        <li><a href="notifications.php">Notifications</a></li>
-        <li><a href="friends.php">Friends</a></li>
-
-        <?php /*if (isset($_SESSION['user_id'])): */?>
-            <li><a href="logout.php">Logout</a></li>
-        <?php /*else: */?>
-            <li><a href="welcome.php">Login/Register</a></li>
-        <?php /*endif; */?>
-    </ul>
-</nav>-->
-
-<?php
 $current_page = basename($_SERVER['PHP_SELF'], ".php");
+
+$notifications = getMongoDBConnection('notifications');
+$unreadCount = $notifications->countDocuments([
+    'receiver_id' => new MongoDB\BSON\ObjectId($_SESSION['user_id']),
+    'status' => 'pending'
+]);
 ?>
 <script>
     function toggleSidebar() {
@@ -40,9 +27,14 @@ $current_page = basename($_SERVER['PHP_SELF'], ".php");
     <div class="nav-right">
         <ul>
             <li>
-                <a href="notifications.php">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAASpJREFUSEvdlVESgjAMRLM3kZvoSZSTCCfRm8hN5CaRddqZUpumDMOP/PBBk5dstgFy8IOD80szQFXPIvIIBfUAppbiXICqnkTkuiQbkoSziDwBjB6kCghVvypJCBoBPK0zJiBLTjmYaAodUS52xXcVUgO8FxkoD6XoSxWq6j1INwPoSmeKgCRwAnCp6ayqlJCdDKWZWIAYRLeY+hKcSFksxgJEeToA1Nh8wkx4viiTBVBmXFp2bRy6MM//ISDRdLNEIvIzs5VEITn3DW3nWjROPrEqDXFJjZEDoj3Ni2NcOF5IxvK9is0Bm9yTwixpiwBvQ3rfU3vnAOp/8xI431eza7pIe4BNAFVlV/FvFnnF5ZYX0wQI64CrmfaNK9z9m33XzZ72W2IPB3wAl/iWGUCC7ZQAAAAASUVORK5CYII="/>
-                </a>
+                <div class="notification-icon">
+                    <a href="notifications.php">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAASpJREFUSEvdlVESgjAMRLM3kZvoSZSTCCfRm8hN5CaRddqZUpumDMOP/PBBk5dstgFy8IOD80szQFXPIvIIBfUAppbiXICqnkTkuiQbkoSziDwBjB6kCghVvypJCBoBPK0zJiBLTjmYaAodUS52xXcVUgO8FxkoD6XoSxWq6j1INwPoSmeKgCRwAnCp6ayqlJCdDKWZWIAYRLeY+hKcSFksxgJEeToA1Nh8wkx4viiTBVBmXFp2bRy6MM//ISDRdLNEIvIzs5VEITn3DW3nWjROPrEqDXFJjZEDoj3Ni2NcOF5IxvK9is0Bm9yTwixpiwBvQ3rfU3vnAOp/8xI431eza7pIe4BNAFVlV/FvFnnF5ZYX0wQI64CrmfaNK9z9m33XzZ72W2IPB3wAl/iWGUCC7ZQAAAAASUVORK5CYII="/>
+                        <?php if ($unreadCount > 0): ?>
+                            <span class="notification-count"><?php echo $unreadCount; ?></span>
+                        <?php endif; ?>
+                    </a>
+                </div>
             </li>
         </ul>
     </div>

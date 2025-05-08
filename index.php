@@ -2,15 +2,15 @@
 session_start();
 require 'connect.php';
 
-// Redirect to welcome.php if the user is not logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: welcome.php');
     exit;
 }
 
-// Fetch user information from MongoDB
 $user_id = $_SESSION['user_id'];
 $users = getMongoDBConnection('users');
+$tasksCollection = getMongoDBConnection('tasks');
+
 $user = $users->findOne(['_id' => new MongoDB\BSON\ObjectId($user_id)]);
 
 if (!$user) {
@@ -18,26 +18,27 @@ if (!$user) {
     exit;
 }
 
-// Fetch tasks for the user
-$tasksCollection = getMongoDBConnection('tasks');
-$tasks = $tasksCollection->find(['user_id' => new MongoDB\BSON\ObjectId($user_id)]);
+$dayIndex = (int) date("N") - 1;
+$dayName = $texts['days'][$dayIndex];
+$dayToday = date("Y.m.d");
 
-// Date for today
+
+$xp = $user['xp'] ?? 0;
+$level = intdiv($xp, 100);
+
+$joinedGroups = isset($user['groups']) ? iterator_to_array($user['groups']) : [];
+$groupCount = count($joinedGroups);
+
+$friendList = isset($user['friends']) ? iterator_to_array($user['friends']) : [];
+$friendsCount = count($friendList);
+
 $today = date("Y-m-d");
-$todayTasks = [];
-$completedCount = 0;
-$pendingCount = 0;
 
-foreach ($tasks as $task) {
-    if (isset($task['deadline']) && $task['deadline'] === $today) {
-        $todayTasks[] = $task;
-    }
-    if (isset($task['completed']) && $task['completed'] === true) {
-        $completedCount++;
-    } else {
-        $pendingCount++;
-    }
-}
+$todayTaskCount = $tasksCollection->countDocuments([
+    'user_id' => new MongoDB\BSON\ObjectId($user_id),
+    'deadline' => $today,
+    'completed' => false
+]);
 ?>
 
 <!DOCTYPE html>
@@ -54,41 +55,44 @@ foreach ($tasks as $task) {
 <?php include 'sidebar.php'; ?>
 
 <div class="main-content">
-    <div class="welcome-card">
-        <h1>Welcome, <?php echo htmlspecialchars($user['username']); ?>!</h1>
+    <h1><?= htmlspecialchars($texts['title']) ?> <?php echo htmlspecialchars($user['username']); ?>!</h1>
+    <div class="stat-box">
+        <p class="stat-title"><?= htmlspecialchars($texts['todays-date']) ?></p>
+        <p class="stat-value"><?php echo $dayToday; ?></p>
+        <p class="stat-value"><?= htmlspecialchars($texts['days'][$dayIndex]) ?></p>
     </div>
-    <div class="day-info">
-        <p><strong>Date:</strong> <?php echo date("l, F j, Y"); ?></p>
-        <p><?php echo $today;?></p>
+    <div class="stat-box">
+        <p class="stat-title"><?= htmlspecialchars($texts['account']['level']) ?></p>
+        <p class="stat-value"><?php echo $level; ?></p>
     </div>
-
-    <div class="tasks">
-        <h2>Today's Tasks</h2>
-        <?php if (!empty($todayTasks)): ?>
-            <ul>
-                <?php foreach ($todayTasks as $task): ?>
-                    <li><?php echo htmlspecialchars($task['name']); ?> -
-                        <?php echo $task['completed'] ? 'Completed' : 'Pending'; ?>
-                <?php endforeach; ?>
-            </ul>
+    <div class="stat-box">
+        <?php if ($friendsCount == 0): ?>
+            <p class="stat-value"><?= htmlspecialchars($texts['friend-count-0']) ?></p>
         <?php else: ?>
-            <p>No tasks for today!</p>
+            <p><?= htmlspecialchars($texts['friend-count-s']) ?><?php echo $friendsCount; ?><?= htmlspecialchars($texts['friend-count-e']) ?></p>
         <?php endif; ?>
+        <button onclick="location.href='friends.php'"><?= htmlspecialchars($texts['friend-view']) ?></button>
+    </div>
+    <div class="stat-box">
+        <?php if ($groupCount == 0): ?>
+            <p class="stat-value"><?= htmlspecialchars($texts['group-count-0']) ?></p>
+        <?php else: ?>
+            <p><?= htmlspecialchars($texts['group-count-s']) ?><?php echo $groupCount; ?><?= htmlspecialchars($texts['group-count-e']) ?></p>
+        <?php endif; ?>
+        <button onclick="location.href='groups.php'"><?= htmlspecialchars($texts['group-view']) ?></button>
+    </div>
+    <div class="stat-box">
+        <?php if ($todayTaskCount == 0): ?>
+            <p class="stat-value"><?= htmlspecialchars($texts['task-count-0']) ?></p>
+        <?php else: ?>
+            <p><?= htmlspecialchars($texts['task-count-s']) ?><?php echo $todayTaskCount; ?><?= htmlspecialchars($texts['task-count-e']) ?></p>
+        <?php endif; ?>
+        <button onclick="location.href='tasks.php'"><?= htmlspecialchars($texts['task-view']) ?></button>
     </div>
 
-    <div class="stats">
-        <h2>Task Statistics</h2>
-        <ul>
-            <li><strong>Completed Tasks:</strong> <?php echo $completedCount; ?></li>
-            <li><strong>Pending Tasks:</strong> <?php echo $pendingCount; ?></li>
-        </ul>
-    </div>
-    <div class="notifications">
-        <h2>Notifications</h2>
-        <ul>
-            <li>You have <?php echo count($todayTasks); ?> task(s) for today.</li>
-        </ul>
-    </div>
+
+
 </div>
+
 </body>
 </html>
